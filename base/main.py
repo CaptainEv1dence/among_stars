@@ -81,18 +81,29 @@ def open_file():
     max_distance = max([max(abs(obj.obj.x), abs(obj.obj.y)) for obj in space_objects])
     calculate_scale_factor(max_distance)
 
-
 def handle_events(events, menu):
     '''функция обработки событий'''
+    k = 0
     global alive
     for event in events:
         menu.react(event)
         if event.type == pg.QUIT:
             alive = False
-        elif event.type == pg.MOUSEMOTION:
-            for ship in space_objects:
-                if ship.obj.type == "Starship":
-                    ship.obj.targetting(event)
+        elif event.type == pg.KEYDOWN:
+            if event.key == pg.K_q:
+                k += 1
+                for ship in space_objects:
+                    if ship.obj.type == "Starship" :
+                        if k - k//2 == 1:
+                            ship.obj.thrusters_on = 1
+                        elif k - k//2 != 1:
+                            ship.obj.thrusters_on = 0
+        elif event.type == pg.KEYUP:
+            if event.key == pg.K_q:
+                for ship in space_objects:
+                    if ship.obj.type == "Starship" :
+                            ship.obj.thrusters_on = 0
+
 
 
 def slider_to_real(val):
@@ -171,6 +182,10 @@ def main():
     perform_execution = True
 
     while alive:
+        for ship in space_objects:
+            if ship.obj.type == "Starship":
+                ship.obj.targetting(pg.mouse.get_pos())
+                print(ship.obj.thrusters_on,ship.obj.angle * 180 / pi)
         handle_events(pg.event.get(), menu)
         cur_time = time.perf_counter()
 

@@ -1,6 +1,6 @@
 # coding: utf-8
 # license: GPLv3
-from math import sin, cos, acos, asin, tan as sin, cos, atan, acos, asin, tan
+from math import sin, cos, acos, tan, pi as sin, cos, atan, acos, tan, pi
 import visual
 
 #consts
@@ -97,20 +97,26 @@ class Starship(Entity):
         self.batteries = 0
         self.fuel_tanks = 0
 
-    def thrusters_start(self):
-        self.thrusters_on = 1
 
     def targetting(self, event):
 
         x = visual.scale_x(self.x)
         y = visual.scale_y(self.y)
 
-        x_s = event.pos[0]
-        y_s = event.pos[1]
+        x_s = event[0]
+        y_s = event[1]
 
-        self.angle = (1 - 2 * (y >= y_s)) * acos((x_s - x) / ((x - x_s) ** 2 + (y - y_s) ** 2) ** 0.5)
+        if ((x - x_s) ** 2 + (y - y_s) ** 2) ** 0.5 == 0:
+            self.angle = 0
+        else:
+            self.angle = ( 2 * (y >= y_s) - 1) * acos((x_s - x) / ((x - x_s) ** 2 + (y - y_s) ** 2) ** 0.5)
 
-    #def thrusters_off(self, event):
+
+    def thrusters_on(self, event):
+        self.thrusters_on = 1
+
+    def thrusters_off(self, event):
+        self.thrusters_on = 0
 
 
 class Bonus(Entity):

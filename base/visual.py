@@ -3,7 +3,7 @@
 
 import pygame as pg
 from math import sin, cos, tan as sin, cos, tan
-from math import pi as pi
+from numpy import pi as pi
 """Модуль визуализации.
 Нигде, кроме этого модуля, не используются экранные координаты объектов.
 Функции, создающие гaрафические объекты и перемещающие их на экране, принимают физические координаты
@@ -96,9 +96,12 @@ class DrawableObject:
 
     def draw_starship(self, surface):
 
+        w = 6
+        pi = 3.14159
+
         an0 = 2 * pi / 9
 
-        r1 = self.obj.R / sin(an0 / 2)
+        r = self.obj.R
         r2 = self.obj.R / sin((pi - an0) / 2)
         an1 = 3 * pi / 4 - an0/4
 
@@ -110,8 +113,22 @@ class DrawableObject:
         x = scale_x(self.obj.x)
         y = scale_y(self.obj.y)
 
+        #hitbox
         pg.draw.circle(surface, self.obj.color, (x, y), self.obj.R)
 
-        pg.draw.polygon(surface, self.obj.color, [(x + r1 * cos(angle), y + r2 * sin(angle)),
-                     (x + r2 * cos(an2), y + r2 * sin(an2)), (x + r2 * cos(an3), y + r2 * sin(an3))])
 
+        #visual body
+        pg.draw.polygon(surface, self.obj.color, [(x + 2 * r * cos(angle), y + 2 * r * sin(angle)),
+                     (x - r * cos(angle) + w * cos(angle + pi/2), y - r * sin(angle) + w * sin(angle + pi/2)),
+                     (x - r * cos(angle) + w * cos(angle - pi/2), y - r * sin(angle) + w * sin(angle - pi/2))])
+        #pg.draw.polygon(surface, self.obj.color, [(x + 10, y ),
+        #                     (x - 10.232323, y + 10),
+        #                     (x - 10, y - 10)])
+#
+        #thruster
+        k = 0.1
+        tr_h = 10
+        tr_w = 3
+        pg.draw.polygon(surface, (255,0,0), [(x, y),
+                                                      (x + tr_h * cos(self.obj.angle + 3*pi/4), y + tr_h * sin(self.obj.angle+ 3*pi/4) ),
+                                                      (x + tr_h * cos(self.obj.angle - 3*pi/4), y + tr_h * sin(self.obj.angle - 3*pi/4) )])

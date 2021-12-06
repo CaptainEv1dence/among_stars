@@ -1,9 +1,11 @@
 # coding: utf-8
 # license: GPLv3
 
-from math import atan, cos, sin, acos
+from numpy import arctan, cos, sin, arccos
 
 gravitational_constant = 6.67408E-11
+Mf = mass_lost_for_tick = 1E5
+Vf = initial_fuel_speed = 1E6
 
 """Гравитационная постоянная Ньютона G"""
 
@@ -18,15 +20,22 @@ def calculate_force(body, space_objects):
     **space_objects** — список объектов, которые воздействуют на тело.
     """
 
+
     body.Fx = body.Fy = 0
     for obj in space_objects:
         if body == obj:
             continue  # тело не действует гравитационной силой на само себя!
         r = ((body.x - obj.x)**2 + (body.y - obj.y)**2)**0.5
         r = max(r, body.R + obj.R) # и так сойдет
-        an = (1 - 2 * (body.y >= obj.y)) * acos((obj.x - body.x) / r)
+        an = (1 - 2 * (body.y >= obj.y)) * arccos((obj.x - body.x) / r)
         body.Fx += cos(an) * gravitational_constant * obj.m * body.m / r**2
         body.Fy += sin(an) * gravitational_constant * obj.m * body.m / r**2
+
+        if body.type == "Starship" and body.thrusters_on == 1:
+            body.Fx += cos(body.angle) * Mf * Vf
+            body.Fy += sin(body.angle) * Mf * Vf
+            body.Fuel -= 0.1
+            body.m -= 0.1 * Mf
 
 def move_space_object(body, dt):
     """Перемещает тело в соответствии с действующей на него силой.

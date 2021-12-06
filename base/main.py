@@ -89,6 +89,10 @@ def handle_events(events, menu):
         menu.react(event)
         if event.type == pg.QUIT:
             alive = False
+        elif event.type == pg.MOUSEMOTION:
+            for ship in space_objects:
+                if ship.obj.type == "Starship":
+                    ship.obj.targetting(event)
 
 
 def slider_to_real(val):
@@ -174,6 +178,7 @@ def main():
             execution((cur_time - last_time) * time_scale)
             text = "%d seconds passed" % (int(model_time))
             timer.set_text(text)
+
 
         last_time = cur_time
         drawer.update(space_objects, box)

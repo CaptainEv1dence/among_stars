@@ -2,7 +2,8 @@
 # license: GPLv3
 
 import pygame as pg
-
+from math import sin, cos, tan as sin, cos, tan
+from math import pi as pi
 """Модуль визуализации.
 Нигде, кроме этого модуля, не используются экранные координаты объектов.
 Функции, создающие гaрафические объекты и перемещающие их на экране, принимают физические координаты
@@ -74,7 +75,10 @@ class Drawer:
         рисует все объекты из заданного массива'''
         self.screen.fill((0, 0, 0))
         for figure in figures:
-            figure.draw(self.screen)
+            if figure.obj.type == "Starship":
+                figure.draw_starship(self.screen)
+            else:
+                figure.draw(self.screen)
 
         screen.blit()
         screen.update()
@@ -89,3 +93,25 @@ class DrawableObject:
         '''рисует круглый объект на заданной поверхности, 
         используя параметры объекта: радиус, цвет, местоположение'''
         pg.draw.circle(surface, self.obj.color, (scale_x(self.obj.x), scale_y(self.obj.y)), self.obj.R)
+
+    def draw_starship(self, surface):
+
+        an0 = 2 * pi / 9
+
+        r1 = self.obj.R / sin(an0 / 2)
+        r2 = self.obj.R / sin((pi - an0) / 2)
+        an1 = 3 * pi / 4 - an0/4
+
+        angle = self.obj.angle
+
+        an2 = an1 + self.obj.angle
+        an3 = an1 - self.obj.angle
+
+        x = scale_x(self.obj.x)
+        y = scale_y(self.obj.y)
+
+        pg.draw.circle(surface, self.obj.color, (x, y), self.obj.R)
+
+        pg.draw.polygon(surface, self.obj.color, [(x + r1 * cos(angle), y + r2 * sin(angle)),
+                     (x + r2 * cos(an2), y + r2 * sin(an2)), (x + r2 * cos(an3), y + r2 * sin(an3))])
+

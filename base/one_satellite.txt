@@ -3,3 +3,6 @@ Star 30 red 1.98892E30 0 0 0 0
 
 # Земля
 Planet 5 green 5.974E24 149.60E9 0 0 20.76E3
+
+# Корабль
+Starship 7 yellow 2.4E10 0 149.60E9 29.8E3 0

@@ -1,7 +1,7 @@
 # coding: utf-8 
 # license: GPLv3
 
-from objects import Star, Planet, CelestialBody
+from objects import Star, Planet, CelestialBody, Starship
 from visual import DrawableObject
 
 def read_space_objects_data_from_file(input_filename):
@@ -26,6 +26,10 @@ def read_space_objects_data_from_file(input_filename):
             elif object_type == "Planet":
                 planet = CelestialBody(**parse_object_parameters(line))
                 objects.append(planet)
+            elif object_type == "Starship":
+                starship = Starship(**parse_object_parameters(line))
+                objects.append(starship)
+
             else:
                 print("Unknown space object")
 
@@ -59,13 +63,13 @@ def parse_object_parameters(line):
             continue
 
     pars = {'type' : s[0],
-    'R' : s[1],
+    'R' : float(s[1]),
     'color' : s[2],
-    'm' : s[3],
-    'x' : s[4],
-    'y' : s[5],
-    'Vx' : s[6],
-    'Vy' : s[7]}
+    'm' : float(s[3]),
+    'x' : float(s[4]),
+    'y' : float(s[5]),
+    'Vx' : float(s[6]),
+    'Vy' : float(s[7])}
     return pars
 
 

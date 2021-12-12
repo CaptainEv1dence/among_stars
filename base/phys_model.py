@@ -71,6 +71,29 @@ def recalculate_space_objects_positions(space_objects, dt):
     for body in space_objects:
         move_space_object(body, dt)
 
-
+def collision(body1, body2):
+    """
+    """
+    if (((body1.x - body2.x)**2 + (body1.y - body2.y)**2)**0.5 <= body1.R + body2.R):
+        k1 = body2.m/(body1.m + body2.m)
+        k2 = body1.m/(body1.m + body2.m)
+        v1 = (body1.vx**2 + body1.vy**2)^0.5
+        v2 = (body2.vx**2 + body2.vy**2)^0.5
+        an = atan((body2.y - body1.y)/(body2.x - body1.x))
+        an1 = atan(body1.y/body1.x)
+        an2 = atan(body2.y/body2.x)
+        v_y1 = v1*sin(an + an1)
+        v_x1 = -k1*v1*cos(an + an1)
+        v_y2 = v2*sin(an + an2)
+        v_x2 = -k2*v2*cos(an + an2)
+        v_11 = (v_x1**2 + v_y1**2)^0.5 
+        v_22 = (v_x2**2 + v_y2**2)^0.5
+        an11 = asin(v_y1/v_11) - an
+        an22 = asin(v_y2/v_22) - an
+        body1.vx = v_11*cos(an11)
+        body1.vy = v_11*sin(an11)
+        body2.vx = v_22*cos(an22)
+        body2.vy = v_22*sin(an22)
+        
 if __name__ == "__main__":
     print("This module is not for direct call!")

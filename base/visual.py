@@ -2,7 +2,7 @@
 # license: GPLv3
 
 import pygame as pg
-import random
+import objects
 import os
 from math import sin, cos, tan as sin, cos, tan
 from numpy import pi as pi
@@ -83,7 +83,7 @@ class Drawer:
                 figure.draw_starship(self.screen)
             else:
                 figure.draw(self.screen)
-            if figure.obj.type != 'CelestialBody':
+            if figure.obj.type != 'CelestialBody' and figure.obj.type != 'Lazer_beam':
                 figure.draw_hp(self.screen)
         screen.blit()
         screen.update()
@@ -108,7 +108,7 @@ class DrawableObject(pg.sprite.Sprite):
         R = self.obj.R
         x = scale_x(self.obj.x)
         y = scale_y(self.obj.y)
-        pg.draw.rect(surface, (0, 255, 0),[x - 20, y - R - 5, 40 * (self.obj.HP/ self.obj.m), 3])
+        pg.draw.rect(surface, (0, 255, 0),[x - 20, y - R - 5, 40 * (self.obj.HP/ (objects.HPCONST * self.obj.m)), 3])
 
     def draw_starship(self, surface):
 

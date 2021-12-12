@@ -120,15 +120,15 @@ class Bullet:
 class Lazer_beam(Bullet):
     def __init__(self, x, y, Vx, Vy):
         self.type = 'Lazer_beam'
-        self.m = 0
-        self.x = x
-        self.y = y
+        self.m = 1E-3
+        self.x = float(x)
+        self.y = float(y)
         self.Fx = 0
         self.Fy = 0
         self.Vx = Vx
         self.Vy = Vy
         self.R = 1
-        self.color =(255, 255, 255)
+        self.color = (255, 255, 255)
 
 class Rocket(Bullet):
     def __init__(self, m,x,y,Vx,Vy,R,color):
@@ -151,7 +151,7 @@ class Entity(CelestialBody):
 
 class Starship(Entity):
     def __init__(self,type, m,x,y,Vx,Vy,R,color):
-        self.type = type
+        self.type = "Starship"
         self.m = m
         self.x = x
         self.y = y

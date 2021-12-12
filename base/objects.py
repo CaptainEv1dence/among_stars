@@ -103,6 +103,7 @@ class Kikorik(Planet):
         return None
 
 class Lazer_beam(Planet):
+    None
     
 class Rocket(Planet):
     def __init__(self, m,x,y,Vx,Vy,R,color):

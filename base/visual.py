@@ -83,7 +83,8 @@ class Drawer:
                 figure.draw_starship(self.screen)
             else:
                 figure.draw(self.screen)
-
+            if figure.obj.type != 'CelestialBody':
+                figure.draw_hp(self.screen)
         screen.blit()
         screen.update()
         pg.display.update()
@@ -104,7 +105,10 @@ class DrawableObject(pg.sprite.Sprite):
         pg.draw.circle(surface, self.obj.color, (scale_x(self.obj.x), scale_y(self.obj.y)), self.obj.R)
 
     def draw_hp(self, surface):
-        pg.draw.rect(surface)
+        R = self.obj.R
+        x = scale_x(self.obj.x)
+        y = scale_y(self.obj.y)
+        pg.draw.rect(surface, (0, 255, 0),[x - 20, y - R - 5, 40 * (self.obj.HP/ self.obj.m), 3])
 
     def draw_starship(self, surface):
 

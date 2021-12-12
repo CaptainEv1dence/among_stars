@@ -1,6 +1,7 @@
 # coding: utf-8
 # license: GPLv3
 import visual
+import objects
 from numpy import arctan, cos, sin, arccos
 from math import atan2 as atan2
 from math import asin as asin
@@ -81,8 +82,8 @@ def collision(body1, body2):
     y2 = visual.scale_y(body2.y)
 
     if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
-        body1.HP *= body1.m/(body1.m + body2.m)
-        body2.HP *= body2.m/(body1.m + body2.m)
+        body1.HP -= objects.HPCONST * body1.m * body1.m/(body1.m + body2.m)
+        body2.HP -= objects.HPCONST * body1.m * body2.m/(body1.m + body2.m)
         k1 = body2.m/(body1.m + body2.m)
         k2 = body1.m/(body1.m + body2.m)
         v1 = (body1.Vx**2 + body1.Vy**2)**0.5

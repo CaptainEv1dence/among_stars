@@ -9,6 +9,7 @@ from objects import *
 import thorpy
 import time
 import numpy as np
+from math import sin, cos as sin, cos
 
 timer = None
 
@@ -177,6 +178,8 @@ def main():
 
     pg.init()
 
+    V = 3E8
+
     width = 1000
     height = 800
     screen = pg.display.set_mode((width, height))
@@ -192,6 +195,8 @@ def main():
                     collision(k.obj,c.obj)
         for ship in space_objects:
             if ship.obj.type == "Starship":
+                if ship.obj.lazers_on == 1:
+                    space_objects.append(DrawableObject(Lazer_Beam(ship.obj.x, ship.obj.y, cos(ship.obj.angle)*V,sin(ship.obj.angle)*V)))
                 ship.obj.targetting(pg.mouse.get_pos())
                 print(ship.obj.thrusters_on,ship.obj.angle * 180 / pi)
         handle_events(pg.event.get(), menu)

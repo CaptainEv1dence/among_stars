@@ -103,7 +103,18 @@ class Kikorik(Planet):
         return None
 
 class Lazer_beam(Planet):
-    
+    def __init__(self, x, y, Vx, Vy):
+        self.type = 'Lazer_beam'
+        self.m = 0
+        self.x = x
+        self.y = y
+        self.Fx = 0
+        self.Fy = 0
+        self.Vx = Vx
+        self.Vy = Vy
+        self.R = 1
+        self.color =(255, 255, 255)
+        
 class Rocket(Planet):
     def __init__(self, m,x,y,Vx,Vy,R,color):
         self.type = 'Rocket'
@@ -143,6 +154,7 @@ class Starship(Entity):
         self.batteries = 0
         self.angle = 0
         self.thrusters_on = 0
+        self.lazers_on = 0
 
     def esplosione_grande(self):
         return

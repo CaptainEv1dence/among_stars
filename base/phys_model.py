@@ -81,9 +81,10 @@ def collision(body1, body2):
     y2 = visual.scale_y(body2.y)
 
     if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
-
-        k1 = body1.m/(body1.m + body2.m)
-        k2 = body2.m/(body1.m + body2.m)
+        body1.HP *= body1.m/(body1.m + body2.m)
+        body2.HP *= body2.m/(body1.m + body2.m)
+        k1 = body2.m/(body1.m + body2.m)
+        k2 = body1.m/(body1.m + body2.m)
         v1 = (body1.Vx**2 + body1.Vy**2)**0.5
         v2 = (body2.Vx**2 + body2.Vy**2)**0.5
         an = atan2((y2 - y1),(x2 - x1))
@@ -95,9 +96,9 @@ def collision(body1, body2):
         an1 = atan2(y1,x1)
         an2 = atan2(y2,x2)
         v_y1 = v1*sin(an + an1)
-        v_x1 = -k1*v1*cos(an + an1)
+        v_x1 = (2*(body1.m >= body2.m) - 1)*k1*v1*cos(an + an1)
         v_y2 = v2*sin(an + an2)
-        v_x2 = -k2*v2*cos(an + an2)
+        v_x2 = (2*(body2.m >= body1.m) - 1)*k2*v2*cos(an + an2)
         v_11 = (v_x1**2 + v_y1**2)**0.5
         v_22 = (v_x2**2 + v_y2**2)**0.5
         an11 = asin(v_y1/v_11) - an

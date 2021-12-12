@@ -178,7 +178,7 @@ def main():
 
     pg.init()
 
-    V = 3E8
+    V = 3E5
 
     width = 1000
     height = 800
@@ -191,12 +191,18 @@ def main():
     while alive:
         for k in space_objects:
             for c in space_objects:
-               # if (k!=c):
+                if (k.obj.type !='Lazer_beam' and c.obj.type !='Lazer_beam'):
                     collision(k.obj,c.obj)
         for ship in space_objects:
             if ship.obj.type == "Starship":
                 if ship.obj.lazers_on == 1:
-                    space_objects.append(DrawableObject(Lazer_Beam(ship.obj.x, ship.obj.y, cos(ship.obj.angle)*V,sin(ship.obj.angle)*V)))
+                    x = ship.obj.x
+                    y = ship.obj.y
+                    Vx = cos(ship.obj.angle)*V
+                    Vy = sin(ship.obj.angle)*V
+                    print(x,y,Vx,Vy)
+                    space_objects.append(DrawableObject(Lazer_beam(x,y,Vx,Vy)))
+
                 ship.obj.targetting(pg.mouse.get_pos())
                 print(ship.obj.thrusters_on,ship.obj.angle * 180 / pi)
         handle_events(pg.event.get(), menu)

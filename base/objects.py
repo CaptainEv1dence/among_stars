@@ -102,7 +102,8 @@ class Kikorik(Planet):
     def rocket_strike(self):
         return None
 
-
+class Lazer_beam(Planet):
+    
 class Rocket(Planet):
     def __init__(self, m,x,y,Vx,Vy,R,color):
         self.type = 'Rocket'

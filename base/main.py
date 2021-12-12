@@ -91,18 +91,22 @@ def handle_events(events, menu):
             alive = False
         elif event.type == pg.KEYDOWN:
             if event.key == pg.K_q:
-                k += 1
                 for ship in space_objects:
                     if ship.obj.type == "Starship" :
-                        if k - k//2 == 1:
                             ship.obj.thrusters_on = 1
-                        elif k - k//2 != 1:
-                            ship.obj.thrusters_on = 0
+            elif event.key == pg.K_w:
+                for ship in space_objects:
+                    if ship.obj.type == "Starship" :
+                            ship.obj.lazers_on = 1
         elif event.type == pg.KEYUP:
             if event.key == pg.K_q:
                 for ship in space_objects:
                     if ship.obj.type == "Starship" :
                             ship.obj.thrusters_on = 0
+            elif event.key == pg.K_w:
+                for ship in space_objects:
+                    if ship.obj.type == "Starship" :
+                            ship.obj.lazers_on = 0
 
 
 

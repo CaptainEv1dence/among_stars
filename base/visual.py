@@ -26,10 +26,8 @@ scale_factor = 1
 Тип: float
 
 Мера: количество пикселей на один метр."""
-#path = r'C:\Users\petrk\among_stars\img'
-#game_folder = os.path.dirname("\Users\petrk\among_stars")
-#img_folder = os.path.join(game_folder, 'img')
-#starship_img = pg.image.load(os.path.join(path, 'rock.png')).convert()
+
+
 
 
 def calculate_scale_factor(max_distance):
@@ -94,16 +92,19 @@ class Drawer:
 class DrawableObject(pg.sprite.Sprite):
     def __init__(self, obj):
         self.obj = obj
-       # pg.sprite.Sprite.__init__(self)
-        #self.image = starship_img
-        #self.image.set_colorkey((0, 0, 0))
-        #self.rect = self.image.get_rect()
-        #self.rect.center = (scale_x(self.obj.x), scale_y(self.obj.y))
+        pg.sprite.Sprite.__init__(self)
+        self.image = starship_img = pg.image.load(os.path.join(r'C:\Users\petrk\among_stars\img', 'rock.png')).convert()
+        self.image.set_colorkey((0, 0, 0))
+        self.rect = self.image.get_rect()
+        self.rect.center = (300, 300)
 
     def draw(self, surface):
         '''рисует круглый объект на заданной поверхности, 
         используя параметры объекта: радиус, цвет, местоположение'''
         pg.draw.circle(surface, self.obj.color, (scale_x(self.obj.x), scale_y(self.obj.y)), self.obj.R)
+
+    def draw_hp(self, surface):
+        pg.draw.rect(surface)
 
     def draw_starship(self, surface):
 

@@ -182,6 +182,10 @@ def main():
     perform_execution = True
 
     while alive:
+        for k in space_objects:
+            for c in space_objects:
+               # if (k!=c):
+                    collision(k.obj,c.obj)
         for ship in space_objects:
             if ship.obj.type == "Starship":
                 ship.obj.targetting(pg.mouse.get_pos())

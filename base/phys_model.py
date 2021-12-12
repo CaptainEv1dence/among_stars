@@ -1,7 +1,9 @@
 # coding: utf-8
 # license: GPLv3
-
+import visual
 from numpy import arctan, cos, sin, arccos
+from math import atan2 as atan2
+from math import asin as asin
 
 gravitational_constant = 6.67408E-11
 Mf = mass_lost_for_tick = 1E5
@@ -32,7 +34,7 @@ def calculate_force(body, space_objects):
 
         if body.type == "Starship" and body.thrusters_on == 1:
             body.Fx += cos(body.angle) * Mf * Vf
-            body.Fy += sin(body.angle) * Mf * Vf
+            body.Fy -= sin(body.angle) * Mf * Vf
             body.Fuel -= 0.1
             body.m -= 0.1 * Mf
 
@@ -73,26 +75,37 @@ def recalculate_space_objects_positions(space_objects, dt):
 def collision(body1, body2):
     """
     """
-    if (((body1.x - body2.x)**2 + (body1.y - body2.y)**2)**0.5 <= body1.R + body2.R):
-        k1 = body2.m/(body1.m + body2.m)
-        k2 = body1.m/(body1.m + body2.m)
-        v1 = (body1.vx**2 + body1.vy**2)^0.5
-        v2 = (body2.vx**2 + body2.vy**2)^0.5
-        an = atan((body2.y - body1.y)/(body2.x - body1.x))
-        an1 = atan(body1.y/body1.x)
-        an2 = atan(body2.y/body2.x)
+    x1 = visual.scale_x(body1.x)
+    x2 = visual.scale_x(body2.x)
+    y1 = visual.scale_y(body1.y)
+    y2 = visual.scale_y(body2.y)
+
+    if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
+
+        k1 = body1.m/(body1.m + body2.m)
+        k2 = body2.m/(body1.m + body2.m)
+        v1 = (body1.Vx**2 + body1.Vy**2)**0.5
+        v2 = (body2.Vx**2 + body2.Vy**2)**0.5
+        an = atan2((y2 - y1),(x2 - x1))
+        #if ((x - x_s) ** 2 + (y - y_s) ** 2) ** 0.5 == 0:
+        #    self.angle = 0
+        #else:
+        #    self.angle = ( 2 * (y >= y_s) - 1) * acos((x_s - x) / ((x - x_s) ** 2 + (y - y_s) ** 2) ** 0.5)
+        #
+        an1 = atan2(y1,x1)
+        an2 = atan2(y2,x2)
         v_y1 = v1*sin(an + an1)
         v_x1 = -k1*v1*cos(an + an1)
         v_y2 = v2*sin(an + an2)
         v_x2 = -k2*v2*cos(an + an2)
-        v_11 = (v_x1**2 + v_y1**2)^0.5 
-        v_22 = (v_x2**2 + v_y2**2)^0.5
+        v_11 = (v_x1**2 + v_y1**2)**0.5
+        v_22 = (v_x2**2 + v_y2**2)**0.5
         an11 = asin(v_y1/v_11) - an
         an22 = asin(v_y2/v_22) - an
-        body1.vx = v_11*cos(an11)
-        body1.vy = v_11*sin(an11)
-        body2.vx = v_22*cos(an22)
-        body2.vy = v_22*sin(an22)
+        body1.Vx = v_11*cos(an11)
+        body1.Vy = v_11*sin(an11)
+        body2.Vx = v_22*cos(an22)
+        body2.Vy = v_22*sin(an22)
         
 if __name__ == "__main__":
     print("This module is not for direct call!")

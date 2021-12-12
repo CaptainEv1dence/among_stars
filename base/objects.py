@@ -102,7 +102,22 @@ class Kikorik(Planet):
     def rocket_strike(self):
         return None
 
-class Lazer_beam(Planet):
+    
+class Bullet:
+    def __init__(self, type, R, color, m, x, y, Vx, Vy):
+        self.type = type
+        self.R = int(R)
+        self.color = color
+        self.m = float(m)
+        self.x = float(x)
+        self.y = float(y)
+        self.Fx = 0.0
+        self.Fy = 0.0
+        self.Vx = float(Vx)
+        self.Vy = float(Vy)
+
+
+class Lazer_beam(Bullet):
     def __init__(self, x, y, Vx, Vy):
         self.type = 'Lazer_beam'
         self.m = 0
@@ -115,7 +130,7 @@ class Lazer_beam(Planet):
         self.R = 1
         self.color =(255, 255, 255)
 
-class Rocket(Planet):
+class Rocket(Bullet):
     def __init__(self, m,x,y,Vx,Vy,R,color):
         self.type = 'Rocket'
         self.m = m

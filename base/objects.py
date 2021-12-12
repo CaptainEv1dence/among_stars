@@ -39,7 +39,7 @@ class Star(CelestialBody):
         self.Vy = float(Vy)
         self.HP = float(self.m) * HPCONST
         self.windtimer = 1e7
-        self.expltimer = 1e10
+
 
     def vento_stellare(self):
         return None
@@ -47,6 +47,24 @@ class Star(CelestialBody):
     def esplosione_grande(self):
         return None
 
+class DeathStar(CelestialBody):
+    def __init__(self, m,x,y,Vx,Vy,R,color):
+        self.type = 'DeathStar'
+        self.m = m
+        self.x = x
+        self.y = y
+        self.Fx = 0
+        self.Fy = 0
+        self.Vx = Vx
+        self.Vy = Vy
+        self.R = R
+        self.color = color
+        self.HP = float(self.m) * 100 * HPCONST
+
+        self.shottimer = 1e9
+
+    def shot(self):
+        return None
 
 class Planet(CelestialBody):
     def __init__(self, m,x,y,Vx,Vy,R,color):
@@ -64,6 +82,42 @@ class Planet(CelestialBody):
 
     def esplosione_grande(self):
         return None
+
+class Kikorik(Planet):
+    def __init__(self, m,x,y,Vx,Vy,R,color):
+        self.type = 'Kikorik'
+        self.m = m
+        self.x = x
+        self.y = y
+        self.Fx = 0
+        self.Fy = 0
+        self.Vx = Vx
+        self.Vy = Vy
+        self.R = R
+        self.color = color
+        self.HP = float(self.m) * HPCONST
+
+        self.rocket_timer = 1e5
+
+    def rocket_strike(self):
+        return None
+
+
+class Rocket(Planet):
+    def __init__(self, m,x,y,Vx,Vy,R,color):
+        self.type = 'Rocket'
+        self.m = m
+        self.x = x
+        self.y = y
+        self.Fx = 0
+        self.Fy = 0
+        self.Vx = Vx
+        self.Vy = Vy
+        self.R = R
+        self.color = color
+        self.HP = float(self.m) * HPCONST
+
+        self.Fuel = 10.0
 
 class Entity(CelestialBody):
     None

@@ -2,6 +2,8 @@
 # license: GPLv3
 
 import pygame as pg
+import random
+import os
 from math import sin, cos, tan as sin, cos, tan
 from numpy import pi as pi
 """Модуль визуализации.
@@ -24,6 +26,10 @@ scale_factor = 1
 Тип: float
 
 Мера: количество пикселей на один метр."""
+#path = r'C:\Users\petrk\among_stars\img'
+#game_folder = os.path.dirname("\Users\petrk\among_stars")
+#img_folder = os.path.join(game_folder, 'img')
+#starship_img = pg.image.load(os.path.join(path, 'rock.png')).convert()
 
 
 def calculate_scale_factor(max_distance):
@@ -85,9 +91,14 @@ class Drawer:
         pg.display.update()
 
 
-class DrawableObject:
+class DrawableObject(pg.sprite.Sprite):
     def __init__(self, obj):
         self.obj = obj
+       # pg.sprite.Sprite.__init__(self)
+        #self.image = starship_img
+        #self.image.set_colorkey((0, 0, 0))
+        #self.rect = self.image.get_rect()
+        #self.rect.center = (scale_x(self.obj.x), scale_y(self.obj.y))
 
     def draw(self, surface):
         '''рисует круглый объект на заданной поверхности, 
@@ -118,9 +129,9 @@ class DrawableObject:
 
 
         #visual body
-        pg.draw.polygon(surface, self.obj.color, [(x + 2 * r * cos(angle), y + 2 * r * sin(angle)),
-                     (x - r * cos(angle) + w * cos(angle + pi/2), y - r * sin(angle) + w * sin(angle + pi/2)),
-                     (x - r * cos(angle) + w * cos(angle - pi/2), y - r * sin(angle) + w * sin(angle - pi/2))])
+        #pg.draw.polygon(surface, self.obj.color, [(x + 2 * r * cos(angle), y + 2 * r * sin(angle)),
+         #            (x - r * cos(angle) + w * cos(angle + pi/2), y - r * sin(angle) + w * sin(angle + pi/2)),
+          #           (x - r * cos(angle) + w * cos(angle - pi/2), y - r * sin(angle) + w * sin(angle - pi/2))])
         #pg.draw.polygon(surface, self.obj.color, [(x + 10, y ),
         #                     (x - 10.232323, y + 10),
         #                     (x - 10, y - 10)])
@@ -130,5 +141,5 @@ class DrawableObject:
         tr_h = 10
         tr_w = 3
         pg.draw.polygon(surface, (255,0,0), [(x, y),
-                                                      (x + tr_h * cos(self.obj.angle + 3*pi/4), y + tr_h * sin(self.obj.angle+ 3*pi/4) ),
-                                                      (x + tr_h * cos(self.obj.angle - 3*pi/4), y + tr_h * sin(self.obj.angle - 3*pi/4) )])
+                                             (x + tr_h * cos(self.obj.angle + 3*pi/4), y + tr_h * sin(self.obj.angle + 3*pi/4) ),
+                                             (x + tr_h * cos(self.obj.angle - 3*pi/4), y + tr_h * sin(self.obj.angle - 3*pi/4) )])

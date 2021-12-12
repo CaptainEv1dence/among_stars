@@ -29,6 +29,12 @@ def read_space_objects_data_from_file(input_filename):
             elif object_type == "Starship":
                 starship = Starship(**parse_object_parameters(line))
                 objects.append(starship)
+            elif object_type == "Kikorik":
+                kikorik = CelestialBody(**parse_object_parameters(line))
+                objects.append(kikorik)
+            elif object_type == "DeathStar":
+                ded = CelestialBody(**parse_object_parameters(line))
+                objects.append(ded)
 
             else:
                 print("Unknown space object")

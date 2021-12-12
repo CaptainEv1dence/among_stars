@@ -105,6 +105,7 @@ class Kikorik(Planet):
     
 class Bullet:
     def __init__(self, type, R, color, m, x, y, Vx, Vy):
+        
         self.type = type
         self.R = int(R)
         self.color = color

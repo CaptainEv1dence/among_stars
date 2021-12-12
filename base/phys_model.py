@@ -20,7 +20,6 @@ def calculate_force(body, space_objects):
     **space_objects** — список объектов, которые воздействуют на тело.
     """
 
-
     body.Fx = body.Fy = 0
     for obj in space_objects:
         if body == obj:

@@ -36,7 +36,7 @@ def calculate_force(body, space_objects):
         body.Fy += sin(an) * gravitational_constant * obj.m * body.m / r**2
 
         if body.type == "Starship" and body.thrusters_on == 1 and body.Fuel >= 0.1:
-            body.Fx += cos(b.angle) * Mf * Vf
+            body.Fx += cos(body.angle) * Mf * Vf
             body.Fy -= sin(body.angle) * Mf * Vf
             body.Fuel -= 0.1
             body.m -= 0.1 * Mf

@@ -191,9 +191,18 @@ def main():
 
     while alive:
         for k in space_objects:
+            x = visual.scale_x(k.obj.x)
+            y = visual.scale_y(k.obj.y)
             for c in space_objects:
-                if (k.obj.type !='Lazer_beam' and c.obj.type !='Lazer_beam'):
-                    collision(k.obj,c.obj)
+                a = collision(k.obj,c.obj)
+                if a[0] == 1:
+                    space_objects.remove(k)
+                if a[1] == 1:
+                    space_objects.remove(c)
+
+            if (x < 0 or x > 1000 or y < 0 or y > 800) and (k.obj.type == "Lazer_beam" or k.obj.type == "Rocket"):
+                space_objects.remove(k)
+
         for ship in space_objects:
             if ship.obj.type == "Starship":
                 if ship.obj.lazers_on == 1:
@@ -201,13 +210,13 @@ def main():
                     y = ship.obj.y
                     Vx = cos(ship.obj.angle)*V
                     Vy = -sin(ship.obj.angle)*V
-                    print(x,y,Vx,Vy)
+                    #print(x,y,Vx,Vy)
                     space_objects.append(DrawableObject(Lazer_beam(x,y,Vx,Vy)))
-                    if (space_objects.__sizeof__() >= 160):
+                    if (len(space_objects) >= 150):
                         space_objects.pop(3)
 
                 ship.obj.targetting(pg.mouse.get_pos())
-                print(ship.obj.thrusters_on,ship.obj.angle * 180 / pi)
+                print(ship.obj.thrusters_on,ship.obj.angle * 180 / pi, len(space_objects))
         handle_events(pg.event.get(), menu)
         cur_time = time.perf_counter()
 

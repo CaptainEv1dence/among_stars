@@ -24,3 +24,6 @@ Planet 15 white 5.685E26 1429.4E9 0 0 9.67E3
 
 # Нептун
 #Planet 7 blue 1.024E26 4498.3E9 0 0 5.48E3
+
+# Корабль
+Starship 7 yellow 2.4E10 0 149.60E9 29.8E3 0

@@ -89,15 +89,14 @@ class Drawer:
         screen.update()
         pg.display.update()
 
-
+#self.image = starship_img = pg.image.load(os.path.join(r'C:\Users\petrk\among_stars\img', 'rock.png')).convert()
+        #self.image.set_colorkey((0, 0, 0))
+        #self.rect = self.image.get_rect()
+        #self.rect.center = (300, 300)
 class DrawableObject(pg.sprite.Sprite):
     def __init__(self, obj):
         self.obj = obj
-        pg.sprite.Sprite.__init__(self)
-        self.image = starship_img = pg.image.load(os.path.join(r'C:\Users\petrk\among_stars\img', 'rock.png')).convert()
-        self.image.set_colorkey((0, 0, 0))
-        self.rect = self.image.get_rect()
-        self.rect.center = (300, 300)
+
 
     def draw(self, surface):
         '''рисует круглый объект на заданной поверхности, 
@@ -108,7 +107,7 @@ class DrawableObject(pg.sprite.Sprite):
         R = self.obj.R
         x = scale_x(self.obj.x)
         y = scale_y(self.obj.y)
-        pg.draw.rect(surface, (0, 255, 0),[x - 20, y - R - 5, 40 * (self.obj.HP/ (objects.HPCONST * self.obj.m)), 3])
+        pg.draw.rect(surface, (0, 255, 0),[x - R, y - R - 5, 2*R * (self.obj.HP/ (40 * R**2)), 3])
 
     def draw_starship(self, surface):
 
@@ -140,11 +139,11 @@ class DrawableObject(pg.sprite.Sprite):
         #pg.draw.polygon(surface, self.obj.color, [(x + 10, y ),
         #                     (x - 10.232323, y + 10),
         #                     (x - 10, y - 10)])
-#
+
         #thruster
-        k = 0.1
-        tr_h = 10
-        tr_w = 3
-        pg.draw.polygon(surface, (255,0,0), [(x, y),
-                                             (x + tr_h * cos(self.obj.angle + 3*pi/4), y + tr_h * sin(self.obj.angle + 3*pi/4) ),
-                                             (x + tr_h * cos(self.obj.angle - 3*pi/4), y + tr_h * sin(self.obj.angle - 3*pi/4) )])
+        #k = 0.1
+        #tr_h = 10
+        #tr_w = 3
+        #pg.draw.polygon(surface, (255,0,0), [(x, y),
+        #                                     (x + tr_h * cos(self.obj.angle + 3*pi/4), y + tr_h * sin(self.obj.angle + 3*pi/4) ),
+        #                                     (x + tr_h * cos(self.obj.angle - 3*pi/4), y + tr_h * sin(self.obj.angle - 3*pi/4) )])

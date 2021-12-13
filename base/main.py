@@ -9,7 +9,8 @@ from objects import *
 import thorpy
 import time
 import numpy as np
-from math import sin, cos as sin, cos
+from math import sin as sin
+from math import cos as cos
 
 timer = None
 
@@ -199,9 +200,11 @@ def main():
                     x = ship.obj.x
                     y = ship.obj.y
                     Vx = cos(ship.obj.angle)*V
-                    Vy = sin(ship.obj.angle)*V
+                    Vy = -sin(ship.obj.angle)*V
                     print(x,y,Vx,Vy)
                     space_objects.append(DrawableObject(Lazer_beam(x,y,Vx,Vy)))
+                    if (space_objects.__sizeof__() >= 160):
+                        space_objects.pop(3)
 
                 ship.obj.targetting(pg.mouse.get_pos())
                 print(ship.obj.thrusters_on,ship.obj.angle * 180 / pi)

@@ -4,7 +4,7 @@ from math import sin, cos, acos, tan, pi as sin, cos, atan, acos, tan, pi
 import visual
 
 #consts
-HPCONST = 1.0
+HPCONST = 1E-22/5.974
 M_FUEL = 1.0
 M_ENERGY = 1.0
 
@@ -22,7 +22,7 @@ class CelestialBody:
         self.Fy = 0.0
         self.Vx = float(Vx)
         self.Vy = float(Vy)
-        self.HP = float(m) * HPCONST
+        self.HP = 40 * self.R ** 2
 
 
 class Star(CelestialBody):
@@ -37,7 +37,7 @@ class Star(CelestialBody):
         self.Fy = 0.0
         self.Vx = float(Vx)
         self.Vy = float(Vy)
-        self.HP = float(self.m) * HPCONST
+        self.HP = 40 * self.R ** 2
         self.windtimer = 1e7
 
 
@@ -59,7 +59,7 @@ class DeathStar(CelestialBody):
         self.Vy = Vy
         self.R = R
         self.color = color
-        self.HP = float(self.m) * 100 * HPCONST
+        self.HP = 40 * self.R ** 2
 
         self.shottimer = 1e9
 
@@ -78,7 +78,7 @@ class Planet(CelestialBody):
         self.Vy = Vy
         self.R = R
         self.color = color
-        self.HP = float(self.m) * HPCONST
+        self.HP = 40 * self.R ** 2
 
     def esplosione_grande(self):
         return None
@@ -95,7 +95,7 @@ class Kikorik(Planet):
         self.Vy = Vy
         self.R = R
         self.color = color
-        self.HP = float(self.m) * HPCONST
+        self.HP = 40 * self.R ** 2
 
         self.rocket_timer = 1e5
 
@@ -142,8 +142,8 @@ class Rocket(Bullet):
         self.Vx = Vx
         self.Vy = Vy
         self.R = R
-        self.color = color
-        self.HP = float(self.m) * HPCONST
+        self.color = (255, 0, 0)
+
 
         self.Fuel = 10.0
 
@@ -162,7 +162,7 @@ class Starship(Entity):
         self.Vy = Vy
         self.R = R
         self.color = color
-        self.HP = float(self.m) * HPCONST
+        self.HP = 40 * self.R ** 2
 
         self.Energy = 100.0
         self.Fuel = 100.0

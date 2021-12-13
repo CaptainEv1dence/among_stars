@@ -81,39 +81,59 @@ def collision(body1, body2):
     y1 = visual.scale_y(body1.y)
     y2 = visual.scale_y(body2.y)
 
-    if (body1.type == 'Lazer_beam' and body2.type != 'Lazer_beam' and body2.type != 'Starship') and (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
-        body2.HP -= 1
-        return [0, 1, 1]
-    elif (body2.type == 'Lazer_beam' and body1.type != 'Lazer_beam' and body1.type != 'Starship') and (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
-        body1.HP -= 1
-        return [1, 0, 1]
-    elif (body1.type!= 'Lazer_beam' and body2.type!= 'Lazer_beam') and (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
-        body1.HP -= (40 * (body1.R**2))*body2.m/(body1.m + body2.m)
-        body2.HP -= (40 * (body2.R**2))*body1.m/(body1.m + body2.m)
-        k1 = body2.m/(body1.m + body2.m)
-        k2 = body1.m/(body1.m + body2.m)
-        v1 = (body1.Vx**2 + body1.Vy**2)**0.5
-        v2 = (body2.Vx**2 + body2.Vy**2)**0.5
-        an = atan2((y2 - y1),(x2 - x1))
-        #if ((x - x_s) ** 2 + (y - y_s) ** 2) ** 0.5 == 0:
-        #    self.angle = 0
-        #else:
-        #    self.angle = ( 2 * (y >= y_s) - 1) * acos((x_s - x) / ((x - x_s) ** 2 + (y - y_s) ** 2) ** 0.5)
-        #
-        an1 = atan2(y1,x1)
-        an2 = atan2(y2,x2)
-        v_y1 = v1*sin(an + an1)
-        v_x1 = (2*(body1.m >= body2.m) - 1)*k1*v1*cos(an + an1)
-        v_y2 = v2*sin(an + an2)
-        v_x2 = (2*(body2.m >= body1.m) - 1)*k2*v2*cos(an + an2)
-        v_11 = (v_x1**2 + v_y1**2)**0.5
-        v_22 = (v_x2**2 + v_y2**2)**0.5
-        an11 = asin(v_y1/v_11) - an
-        an22 = asin(v_y2/v_22) - an
-        body1.Vx = v_11*cos(an11)
-        body1.Vy = v_11*sin(an11)
-        body2.Vx = v_22*cos(an22)
-        body2.Vy = v_22*sin(an22)
-        return [1, 1, 1]
+    if (body1.type == 'Lazer_beam' and body2.type != 'Lazer_beam' and body2.type != 'Starship'):
+        if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
+            body2.HP -= 1
+            return [0, 1, 1]
+        else:
+            return [0, 1, 0]
+    if (body2.type == 'Lazer_beam' and body1.type != 'Lazer_beam' and body1.type != 'Starship'):
+        if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
+            body1.HP -= 1
+            return [1, 0, 1]
+        else:
+            return [1, 0, 0]
+    if (body1.type!= 'Lazer_beam' and body2.type!= 'Lazer_beam'):
+        if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
+            body1.HP -= (40 * (body1.R**2))*body2.m/(body1.m + body2.m)
+            body2.HP -= (40 * (body2.R**2))*body1.m/(body1.m + body2.m)
+            k1 = body2.m/(body1.m + body2.m)
+            k2 = body1.m/(body1.m + body2.m)
+            v1 = (body1.Vx**2 + body1.Vy**2)**0.5
+            v2 = (body2.Vx**2 + body2.Vy**2)**0.5
+            an = atan2((y2 - y1),(x2 - x1))
+            an1 = atan2(y1,x1)
+            an2 = atan2(y2,x2)
+            v_y1 = v1*sin(an + an1)
+            v_x1 = (2*(body1.m >= body2.m) - 1)*k1*v1*cos(an + an1)
+            v_y2 = v2*sin(an + an2)
+            v_x2 = (2*(body2.m >= body1.m) - 1)*k2*v2*cos(an + an2)
+            v_11 = (v_x1**2 + v_y1**2)**0.5
+            v_22 = (v_x2**2 + v_y2**2)**0.5
+            an11 = asin(v_y1/v_11) - an
+            an22 = asin(v_y2/v_22) - an
+            body1.Vx = v_11*cos(an11)
+            body1.Vy = v_11*sin(an11)
+            body2.Vx = v_22*cos(an22)
+            body2.Vy = v_22*sin(an22)
+            if (body2.type == 'Starship'):
+                return [1, 2, 1]
+            if (body2.type == 'Starship'):
+                return [2, 1, 1]
+            if (body1.type != 'Starship' and body2.type != 'Starship'):
+                return [1, 1, 1]
+        else:
+            f (body2.type == 'Starship'):
+                return [1, 2, 0]
+            if (body2.type == 'Starship'):
+                return [2, 1, 0]
+            if (body1.type != 'Starship' and body2.type != 'Starship'):
+                return [1, 1, 0]
+    if (body1.type == 'Lazer_beam' and body2.type == 'Lazer_beam'):
+        return [0, 0, 0]
+    if (body1.type == 'Lazer_beam' and body2.type == 'Spaceship'):
+        return [0, 2, 0]
+    if (body2.type == 'Lazer_beam' and body1.type == 'Spaceship'):
+        return [2, 0, 0]
 if __name__ == "__main__":
     print("This module is not for direct call!")

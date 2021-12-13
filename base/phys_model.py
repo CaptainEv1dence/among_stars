@@ -76,7 +76,6 @@ def recalculate_space_objects_positions(space_objects, dt):
 def collision(body1, body2):
     """
     """
-
     x1 = visual.scale_x(body1.x)
     x2 = visual.scale_x(body2.x)
     y1 = visual.scale_y(body1.y)
@@ -88,7 +87,7 @@ def collision(body1, body2):
     elif (body2.type == 'Lazer_beam' and body1.type != 'Lazer_beam' and body1.type != 'Starship') and (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
         body1.HP -= 1
         return [1, 0]
-    elif (body1.type!= 'Lazer_beam' and body1.type!= 'Lazer_beam') and (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
+    elif (body1.type!= 'Lazer_beam' and body2.type!= 'Lazer_beam') and (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
         body1.HP -= (40 * (body1.R**2))*body2.m/(body1.m + body2.m)
         body2.HP -= (40 * (body2.R**2))*body1.m/(body1.m + body2.m)
         k1 = body2.m/(body1.m + body2.m)

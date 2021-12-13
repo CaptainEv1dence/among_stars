@@ -190,8 +190,13 @@ def main():
     menu, box, timer = init_ui(screen)
     perform_execution = True
 
+    d = 0
+
     while alive:
         for k in space_objects:
+            #if (k.obj.type == "DeathStar"):
+                #if d == 0:
+
             x = visual.scale_x(k.obj.x)
             y = visual.scale_y(k.obj.y)
             for c in space_objects:
@@ -208,19 +213,19 @@ def main():
 
         for ship in space_objects:
             if ship.obj.type == "Starship":
-                print(ship.obj.Fuel)
+                print(ship.obj.Fuel, ship.obj.Energy)
                 if ship.obj.lazers_on == 1:
                     x = ship.obj.x
                     y = ship.obj.y
                     Vx = cos(ship.obj.angle)*V
                     Vy = -sin(ship.obj.angle)*V
 
-                    if (ship.obj.Energy > 0.1):
+                    if (ship.obj.Energy > 0.6):
                         space_objects.append(DrawableObject(Lazer_beam(x,y,Vx,Vy)))
-                        ship.obj.Energy -= 0.1
+                        ship.obj.Energy -= 0.6
 
                     if (len(space_objects) >= 150):
-                        space_objects.pop(3)
+                        space_objects.pop(7)
 
                 ship.obj.targetting(pg.mouse.get_pos())
                 print(ship.obj.thrusters_on,ship.obj.angle * 180 / pi, len(space_objects))

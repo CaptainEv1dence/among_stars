@@ -81,14 +81,16 @@ class Drawer:
         for figure in figures:
             if figure.obj.type == "Starship":
                 figure.draw_starship(self.screen)
-                pg.draw.rect(self.screen, (150, 150, 0),[50, 720, figure.obj.Fuel * 1 , 40])
+                pg.draw.rect(self.screen, (0, 150, 150), [0, 700, 250, 100])
+                pg.draw.rect(self.screen, (255, 255, 0),[60, 720, figure.obj.Energy * 1.4, 20])
+                pg.draw.rect(self.screen, (255, 0, 255), [60, 760, figure.obj.Fuel * 1.4, 20])
 
             else:
                 figure.draw(self.screen)
             if figure.obj.type != 'CelestialBody' and figure.obj.type != 'Lazer_beam':
                 figure.draw_hp(self.screen)
 
-        pg.draw.rect(self.screen, (0, 150, 200),[0, 700, 250, 100])
+
 
         screen.blit()
         screen.update()

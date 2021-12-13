@@ -4,6 +4,7 @@ from math import sin, cos, acos, tan, pi as sin, cos, atan, acos, tan, pi
 import visual
 
 #consts
+G = gravitational_constant = 6.67408E-11
 HPCONST = 1E-22/5.974
 M_FUEL = 1.0
 M_ENERGY = 1.0
@@ -60,11 +61,21 @@ class DeathStar(CelestialBody):
         self.R = R
         self.color = color
         self.HP = 40 * self.R ** 2
+        self.amount = 0
 
         self.shottimer = 1e9
 
     def shot(self):
         return None
+
+    def spawn_suckers(self):
+        if self.amount == 0:
+            Rk = self.R/(visual.scale_x(1) - 500)
+            V = (G * self.m / (2 * Rk))
+            return (2 * Rk, V)
+
+
+
 
 class Planet(CelestialBody):
     def __init__(self, m,x,y,Vx,Vy,R,color):

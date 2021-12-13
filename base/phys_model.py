@@ -116,24 +116,14 @@ def collision(body1, body2):
             body1.Vy = v_11*sin(an11)
             body2.Vx = v_22*cos(an22)
             body2.Vy = v_22*sin(an22)
-            if (body2.type == 'Starship'):
-                return [1, 2, 1]
-            if (body2.type == 'Starship'):
-                return [2, 1, 1]
-            if (body1.type != 'Starship' and body2.type != 'Starship'):
-                return [1, 1, 1]
+            return [1, 1, 1]
         else:
-            if (body2.type == 'Starship'):
-                return [1, 2, 0]
-            if (body1.type == 'Starship'):
-                return [2, 1, 0]
-            if (body1.type != 'Starship' and body2.type != 'Starship'):
-                return [1, 1, 0]
+            return [1, 1, 0]
     if (body1.type == 'Lazer_beam' and body2.type == 'Lazer_beam'):
         return [0, 0, 0]
     if (body1.type == 'Lazer_beam' and body2.type == 'Starship'):
-        return [0, 2, 0]
+        return [0, 1, 0]
     if (body2.type == 'Lazer_beam' and body1.type == 'Starship'):
-        return [2, 0, 0]
+        return [1, 0, 0]
 if __name__ == "__main__":
     print("This module is not for direct call!")

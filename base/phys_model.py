@@ -9,6 +9,8 @@ from math import asin as asin
 gravitational_constant = 6.67408E-11
 Mf = mass_lost_for_tick = 1E5
 Vf = initial_fuel_speed = 1E6
+Mf_rocket = 1E4
+Vf_rocket = 1E5
 
 """Гравитационная постоянная Ньютона G"""
 
@@ -34,11 +36,16 @@ def calculate_force(body, space_objects):
         body.Fy += sin(an) * gravitational_constant * obj.m * body.m / r**2
 
         if body.type == "Starship" and body.thrusters_on == 1 and body.Fuel >= 0.1:
-            body.Fx += cos(body.angle) * Mf * Vf
+            body.Fx += cos(b.angle) * Mf * Vf
             body.Fy -= sin(body.angle) * Mf * Vf
             body.Fuel -= 0.1
             body.m -= 0.1 * Mf
-
+        if body.type == 'Rocket' and obj.type == 'Starship' and body.Fuel >= 0.1:
+            body.Fx += cos(an) * Mf_rocket * Vf_rocket
+            body.Fy -= sin(an) * Mf_rocket * Vf_rocket
+            body.Fuel -= 0.1
+            body.m -= 0.1 * Mf_rocket
+            
 def move_space_object(body, dt):
     """Перемещает тело в соответствии с действующей на него силой.
 

@@ -2,6 +2,7 @@
 # license: GPLv3
 
 import pygame as pg
+import pygame.freetype
 import objects
 import os
 from math import sin, cos, tan as sin, cos, tan
@@ -13,6 +14,10 @@ from numpy import pi as pi
 
 header_font = "Arial-16"
 """Шрифт в заголовке"""
+
+pg.init()
+pg.font.init()
+font = pg.freetype.Font("Lobster-Regular.ttf", 18)
 
 window_width = 1000
 """Ширина окна"""
@@ -27,7 +32,10 @@ scale_factor = 1
 
 Мера: количество пикселей на один метр."""
 
-
+def drawTextCentered(surface,rect_cent,  text, text_size, color):
+    text_rect = font.get_rect(text, size = text_size)
+    text_rect.center = rect_cent
+    font.render_to(surface, text_rect, text, color, size = text_size)
 
 
 def calculate_scale_factor(max_distance):
@@ -81,9 +89,14 @@ class Drawer:
         for figure in figures:
             if figure.obj.type == "Starship":
                 figure.draw_starship(self.screen)
-                pg.draw.rect(self.screen, (0, 150, 150), [0, 700, 250, 100])
-                pg.draw.rect(self.screen, (255, 255, 0),[60, 720, figure.obj.Energy * 1.4, 20])
-                pg.draw.rect(self.screen, (255, 0, 255), [60, 760, figure.obj.Fuel * 1.4, 20])
+                pg.draw.rect(self.screen, (0, 150, 150), [0, 700, 300, 100])
+                pg.draw.rect(self.screen, (255, 255, 0),[100, 720, figure.obj.Energy * 1.4, 20])
+                pg.draw.rect(self.screen, (255, 0, 255), [100, 760, figure.obj.Fuel * 1.4, 20])
+                drawTextCentered(self.screen, (50, 730), f"Energy: {int(figure.obj.Energy)}%", 18, (255, 255, 255))
+                drawTextCentered(self.screen, (40, 770), f"Fuel: {int(figure.obj.Fuel)}%", 18, (255, 255, 255))
+                pygame.display.flip()
+                #text_surface, rect = FONT.render(f" {figure.obj.Energy}", (255, 255, 255))
+                #screen.blit(text_surface)
 
             else:
                 figure.draw(self.screen)

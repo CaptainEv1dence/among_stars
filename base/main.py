@@ -179,6 +179,8 @@ def main():
     physical_time = 0
 
     pg.init()
+    pg.font.init()
+    FONT = pg.freetype.Font("Lobster-Regular.ttf", 18)
 
     V = 3E5
 

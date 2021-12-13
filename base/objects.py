@@ -132,16 +132,16 @@ class Lazer_beam(Bullet):
         self.color = (255, 255, 255)
 
 class Rocket(Bullet):
-    def __init__(self, m,x,y,Vx,Vy,R,color):
+    def __init__(self, x,y,Vx,Vy):
         self.type = 'Rocket'
-        self.m = m
+        self.m = 1
         self.x = x
         self.y = y
         self.Fx = 0
         self.Fy = 0
         self.Vx = Vx
         self.Vy = Vy
-        self.R = R
+        self.R = 3
         self.color = (255, 0, 0)
 
 

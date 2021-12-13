@@ -161,6 +161,7 @@ def init_ui(screen):
     return menu, box, timer
 
 
+
 def main():
     """Главная функция главного модуля.
     """
@@ -195,10 +196,12 @@ def main():
             y = visual.scale_y(k.obj.y)
             for c in space_objects:
                 a = collision(k.obj,c.obj)
-                if a[0] == 1:
-                    space_objects.remove(k)
-                if a[1] == 1:
-                    space_objects.remove(c)
+                print(a)
+                if a[2] == 1:
+                    if a[0] == 0:
+                        space_objects.remove(k)
+                    if a[1] == 0:
+                        space_objects.remove(c)
 
             if (x < 0 or x > 1000 or y < 0 or y > 800) and (k.obj.type == "Lazer_beam" or k.obj.type == "Rocket"):
                 space_objects.remove(k)
@@ -211,7 +214,10 @@ def main():
                     Vx = cos(ship.obj.angle)*V
                     Vy = -sin(ship.obj.angle)*V
                     #print(x,y,Vx,Vy)
-                    space_objects.append(DrawableObject(Lazer_beam(x,y,Vx,Vy)))
+                    if (ship.obj.Energy > 0.1):
+                        space_objects.append(DrawableObject(Lazer_beam(x,y,Vx,Vy)))
+                        ship.obj.Energy -= 0.1
+
                     if (len(space_objects) >= 150):
                         space_objects.pop(3)
 

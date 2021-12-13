@@ -123,17 +123,17 @@ def collision(body1, body2):
             if (body1.type != 'Starship' and body2.type != 'Starship'):
                 return [1, 1, 1]
         else:
-            f (body2.type == 'Starship'):
-                return [1, 2, 0]
             if (body2.type == 'Starship'):
+                return [1, 2, 0]
+            if (body1.type == 'Starship'):
                 return [2, 1, 0]
             if (body1.type != 'Starship' and body2.type != 'Starship'):
                 return [1, 1, 0]
     if (body1.type == 'Lazer_beam' and body2.type == 'Lazer_beam'):
         return [0, 0, 0]
-    if (body1.type == 'Lazer_beam' and body2.type == 'Spaceship'):
+    if (body1.type == 'Lazer_beam' and body2.type == 'Starship'):
         return [0, 2, 0]
-    if (body2.type == 'Lazer_beam' and body1.type == 'Spaceship'):
+    if (body2.type == 'Lazer_beam' and body1.type == 'Starship'):
         return [2, 0, 0]
 if __name__ == "__main__":
     print("This module is not for direct call!")

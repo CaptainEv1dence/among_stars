@@ -85,6 +85,9 @@ class Drawer:
                 figure.draw(self.screen)
             if figure.obj.type != 'CelestialBody' and figure.obj.type != 'Lazer_beam':
                 figure.draw_hp(self.screen)
+
+        pg.draw.rect(self.screen, (0, 50, 200),[0, 700, 200, 10])
+
         screen.blit()
         screen.update()
         pg.display.update()

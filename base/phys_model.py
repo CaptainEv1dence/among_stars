@@ -82,10 +82,10 @@ def collision(body1, body2):
     y1 = visual.scale_y(body1.y)
     y2 = visual.scale_y(body2.y)
 
-    if (body1.type == 'Lazer_beam' and body2.type != 'Lazer_beam'):
+    if (body1.type == 'Lazer_beam' and body2.type != 'Lazer_beam') and (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
         body2.HP -= 1
         return [0, 1]
-    elif (body2.type == 'Lazer_beam' and body1.type != 'Lazer_beam'):
+    elif (body2.type == 'Lazer_beam' and body1.type != 'Lazer_beam') and (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
         body1.HP -= 1
         return [1, 0]
     elif (body1.type!= 'Lazer_beam' and body1.type!= 'Lazer_beam') and (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):

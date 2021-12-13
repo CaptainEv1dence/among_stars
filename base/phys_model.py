@@ -82,7 +82,13 @@ def collision(body1, body2):
     y1 = visual.scale_y(body1.y)
     y2 = visual.scale_y(body2.y)
 
-    if (body1.type!= 'Lazer_beam' and body1.type!= 'Lazer_beam') and (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
+    if (body1.type == 'Lazer_beam' and body2.type != 'Lazer_beam'):
+        body2.HP -= 1
+        return [0, 1]
+    elif (body2.type == 'Lazer_beam' and body1.type != 'Lazer_beam'):
+        body1.HP -= 1
+        return [1, 0]
+    elif (body1.type!= 'Lazer_beam' and body1.type!= 'Lazer_beam') and (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
         body1.HP -= objects.HPCONST * body1.m * body1.m/(body1.m + body2.m)
         body2.HP -= objects.HPCONST * body1.m * body2.m/(body1.m + body2.m)
         k1 = body2.m/(body1.m + body2.m)
@@ -109,6 +115,8 @@ def collision(body1, body2):
         body1.Vy = v_11*sin(an11)
         body2.Vx = v_22*cos(an22)
         body2.Vy = v_22*sin(an22)
-        
+        return [1, 1]
+    else:
+        return [0, 0]
 if __name__ == "__main__":
     print("This module is not for direct call!")

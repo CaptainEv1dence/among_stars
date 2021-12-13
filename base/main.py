@@ -196,7 +196,7 @@ def main():
             y = visual.scale_y(k.obj.y)
             for c in space_objects:
                 a = collision(k.obj,c.obj)
-                print(a)
+
                 if a[2] == 1:
                     if a[0] == 0:
                         space_objects.remove(k)
@@ -208,12 +208,13 @@ def main():
 
         for ship in space_objects:
             if ship.obj.type == "Starship":
+                print(ship.obj.Fuel)
                 if ship.obj.lazers_on == 1:
                     x = ship.obj.x
                     y = ship.obj.y
                     Vx = cos(ship.obj.angle)*V
                     Vy = -sin(ship.obj.angle)*V
-                    #print(x,y,Vx,Vy)
+
                     if (ship.obj.Energy > 0.1):
                         space_objects.append(DrawableObject(Lazer_beam(x,y,Vx,Vy)))
                         ship.obj.Energy -= 0.1

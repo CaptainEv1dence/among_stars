@@ -89,8 +89,8 @@ def collision(body1, body2):
         body1.HP -= 1
         return [1, 0]
     elif (body1.type!= 'Lazer_beam' and body1.type!= 'Lazer_beam') and (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
-        body1.HP -= objects.HPCONST * body1.m * body1.m/(body1.m + body2.m)
-        body2.HP -= objects.HPCONST * body1.m * body2.m/(body1.m + body2.m)
+        body1.HP -= (40 * (body1.R**2))*body2.m/(body1.m + body2.m)
+        body2.HP -= (40 * (body2.R**2))*body1.m/(body1.m + body2.m)
         k1 = body2.m/(body1.m + body2.m)
         k2 = body1.m/(body1.m + body2.m)
         v1 = (body1.Vx**2 + body1.Vy**2)**0.5

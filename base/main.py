@@ -11,6 +11,7 @@ import time
 import numpy as np
 from math import sin as sin
 from math import cos as cos
+from math import pi as pi
 
 timer = None
 
@@ -220,10 +221,14 @@ def main():
                     if (a[2]!=0):
                         v = a[1]
                         r = a[0]
-                        space_objects.append(DrawableObject(Kikorik(1, x1 + r, y1, vx, v + vy, 4, (255, 0, 255))))
-                        space_objects.append(DrawableObject(Kikorik(1, x1 - r, y1, vx, vy-v, 4, (255, 0, 255))))
-                        space_objects.append(DrawableObject(Kikorik(1, x1, y1 + r, vx+v, vy, 4, (255, 0, 255))))
-                        space_objects.append(DrawableObject(Kikorik(1, x1, y1 - r, vx-v, vy, 4, (255, 0, 255))))
+                        space_objects.append(DrawableObject(Kikorik(1, x1 , y1 - r, 0, 0, 16, (255, 255, 255),1)))
+                        space_objects.append(DrawableObject(Kikorik(1, x1 + r*sin(72*pi/180), y1 - r*cos(72*pi/180), 0, 0, 16, (255, 255, 255),2)))
+                        space_objects.append(DrawableObject(Kikorik(1, x1 + r*cos(54*pi/180), y1 + r*sin(54*pi/180), 0, 0, 16, (255, 255, 255),3)))
+                        space_objects.append(DrawableObject(
+                            Kikorik(1, x1 - r * cos(54 * pi / 180), y1 + r * sin(54 * pi / 180), 0, 0, 16, (255, 255, 255),4)))
+                        space_objects.append(DrawableObject(
+                            Kikorik(1, x1 + r * sin(72 * pi / 180), y1 - r * cos(72 * pi / 180), 0, 0, 16, (255, 255, 255),5)))
+
 
 
             for c in space_objects:

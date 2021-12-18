@@ -5,7 +5,7 @@ Star 30 red 1.98892E30 0 0 0 0
 Planet 5 green 5.974E24 149.60E9 0 0 29.76E3
 
 # Кто звезда тот здохнет
-DeathStar 20 gray 6E27 -300.0E9 0 0 -20.76E3
+DeathStar 20 yellow 6E27 -300.0E9 0 0 -20.76E3
 
 # Корабль
-Starship 7 yellow 2.4E10 0 149.60E9 20.8E3 0
+Starship 7 red 2.4E10 0 149.60E9 20.8E3 0

@@ -5,6 +5,7 @@ import objects
 from numpy import arctan, cos, sin, arccos
 from math import atan2 as atan2
 from math import asin as asin
+from math import pi as pi
 
 gravitational_constant = 6.67408E-11
 Mf = mass_lost_for_tick = 1E5
@@ -34,7 +35,7 @@ def calculate_force(body, space_objects):
         f = visual.scale_factor
         rr = obj.R/f
         an = (1 - 2 * (body.y >= obj.y)) * arccos((obj.x - body.x) / r)
-        if (body.type == "Kikorik" and obj.type = "DeathStar"):
+        if (body.type == "Kikorik" and obj.type == "DeathStar"):
             if (body.number == 1):
                 body.x = obj.x
                 body.y = obj.y - 2*rr

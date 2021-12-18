@@ -95,7 +95,7 @@ class Planet(CelestialBody):
         return None
 
 class Kikorik(Planet):
-    def __init__(self, m,x,y,Vx,Vy,R,color):
+    def __init__(self, m,x,y,Vx,Vy,R,color, number):
         self.type = 'Kikorik'
         self.m = m
         self.x = x

@@ -1,7 +1,7 @@
 # coding: utf-8 
 # license: GPLv3
 
-from objects import Star, Planet, CelestialBody, Starship
+from objects import Star, Planet, CelestialBody, Starship, DeathStar
 from visual import DrawableObject
 
 def read_space_objects_data_from_file(input_filename):
@@ -33,7 +33,7 @@ def read_space_objects_data_from_file(input_filename):
                 kikorik = CelestialBody(**parse_object_parameters(line))
                 objects.append(kikorik)
             elif object_type == "DeathStar":
-                ded = CelestialBody(**parse_object_parameters(line))
+                ded = DeathStar(**parse_object_parameters(line))
                 objects.append(ded)
 
             else:

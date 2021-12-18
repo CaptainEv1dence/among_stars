@@ -91,24 +91,33 @@ def handle_events(events, menu):
         menu.react(event)
         if event.type == pg.QUIT:
             alive = False
+        elif event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+                for ship in space_objects:
+                    if ship.obj.type == "Starship" and ship.obj.Energy > 0.2:
+                        ship.obj.lazers_on = 1
+        elif event.type == pg.MOUSEBUTTONDOWN and event.button == 3:
+                for ship in space_objects:
+                    if ship.obj.type == "Starship":
+                        ship.obj.shield_on = 1
         elif event.type == pg.KEYDOWN:
-            if event.key == pg.K_q:
+            if event.key == pg.K_w:
                 for ship in space_objects:
-                    if ship.obj.type == "Starship" :
+                    if ship.obj.type == "Starship":
                             ship.obj.thrusters_on = 1
-            elif event.key == pg.K_w:
+        elif event.type == pg.MOUSEBUTTONUP and event.button == 1:
+            for ship in space_objects:
+                if ship.obj.type == "Starship":
+                    ship.obj.lazers_on = 0
+        elif event.type == pg.MOUSEBUTTONUP and event.button == 3:
                 for ship in space_objects:
-                    if ship.obj.type == "Starship" :
-                            ship.obj.lazers_on = 1
+                    if ship.obj.type == "Starship":
+                        ship.obj.shield_on = 0
         elif event.type == pg.KEYUP:
-            if event.key == pg.K_q:
+            if event.key == pg.K_w:
                 for ship in space_objects:
                     if ship.obj.type == "Starship" :
                             ship.obj.thrusters_on = 0
-            elif event.key == pg.K_w:
-                for ship in space_objects:
-                    if ship.obj.type == "Starship" :
-                            ship.obj.lazers_on = 0
+
 
 
 
@@ -182,7 +191,7 @@ def main():
     pg.font.init()
     FONT = pg.freetype.Font("Lobster-Regular.ttf", 18)
 
-    V = 3E5
+    V = 1E6
 
     width = 1000
     height = 800
@@ -196,11 +205,27 @@ def main():
 
     while alive:
         for k in space_objects:
-            #if (k.obj.type == "DeathStar"):
-                #if d == 0:
-
             x = visual.scale_x(k.obj.x)
             y = visual.scale_y(k.obj.y)
+            x1 = k.obj.x
+            y1 = k.obj.y
+            vx = k.obj.Vx
+            vy = k.obj.Vy
+
+
+            if k.obj.type == "DeathStar":
+                if k.obj.amount == 0:
+                    k.obj.amount += 4
+                    a = k.obj.spawn()
+                    if (a[2]!=0):
+                        v = a[1]
+                        r = a[0]
+                        space_objects.append(DrawableObject(Kikorik(1, x1 + r, y1, vx, v + vy, 4, (255, 0, 255))))
+                        space_objects.append(DrawableObject(Kikorik(1, x1 - r, y1, vx, vy-v, 4, (255, 0, 255))))
+                        space_objects.append(DrawableObject(Kikorik(1, x1, y1 + r, vx+v, vy, 4, (255, 0, 255))))
+                        space_objects.append(DrawableObject(Kikorik(1, x1, y1 - r, vx-v, vy, 4, (255, 0, 255))))
+
+
             for c in space_objects:
                 a = collision(k.obj,c.obj)
 
@@ -214,8 +239,15 @@ def main():
                 space_objects.remove(k)
 
         for ship in space_objects:
+
             if ship.obj.type == "Starship":
                 print(ship.obj.Fuel, ship.obj.Energy)
+
+                if ship.obj.shield_on == 1:
+
+                    if (ship.obj.Energy > 0.2):
+                        ship.obj.Energy -= 0.2
+
                 if ship.obj.lazers_on == 1:
                     x = ship.obj.x
                     y = ship.obj.y

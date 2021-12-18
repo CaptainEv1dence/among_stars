@@ -88,7 +88,9 @@ class Drawer:
         self.screen.fill((0, 0, 0))
         for figure in figures:
             if figure.obj.type == "Starship":
+
                 figure.draw_starship(self.screen)
+
                 pg.draw.rect(self.screen, (0, 150, 150), [0, 700, 300, 100])
                 pg.draw.rect(self.screen, (255, 255, 0),[100, 720, figure.obj.Energy * 1.4, 20])
                 pg.draw.rect(self.screen, (255, 0, 255), [100, 760, figure.obj.Fuel * 1.4, 20])
@@ -113,7 +115,8 @@ class Drawer:
         #self.image.set_colorkey((0, 0, 0))
         #self.rect = self.image.get_rect()
         #self.rect.center = (300, 300)
-class DrawableObject(pg.sprite.Sprite):
+
+class DrawableObject:
     def __init__(self, obj):
         self.obj = obj
 
@@ -147,8 +150,11 @@ class DrawableObject(pg.sprite.Sprite):
         x = scale_x(self.obj.x)
         y = scale_y(self.obj.y)
 
+        if (self.obj.shield_on == 1):
+            pg.draw.circle(surface, (255, 255, 255), (x,y), self.obj.R_sh, 1)
+
         #hitbox
-        pg.draw.circle(surface, self.obj.color, (x, y), self.obj.R)
+        pg.draw.circle(surface, self.obj.color, (x, y), self.obj.R, 2)
 
 
         #visual body

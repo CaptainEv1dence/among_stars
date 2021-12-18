@@ -26,6 +26,7 @@ class CelestialBody:
         self.HP = 40 * self.R ** 2
 
 
+
 class Star(CelestialBody):
     def __init__(self, m,x,y,Vx,Vy,R,color):
         self.type = 'Star'
@@ -48,9 +49,9 @@ class Star(CelestialBody):
     def esplosione_grande(self):
         return None
 
-class DeathStar(CelestialBody):
-    def __init__(self, m,x,y,Vx,Vy,R,color):
-        self.type = 'DeathStar'
+class DeathStar:
+    def __init__(self,type, m,x,y,Vx,Vy,R,color):
+        self.type = "DeathStar"
         self.m = m
         self.x = x
         self.y = y
@@ -68,11 +69,10 @@ class DeathStar(CelestialBody):
     def shot(self):
         return None
 
-    def spawn_suckers(self):
-        if self.amount == 0:
-            Rk = self.R/(visual.scale_x(1) - 500)
-            V = (G * self.m / (2 * Rk))
-            return (2 * Rk, V)
+    def spawn(self):
+        Rk = self.R/visual.scale_factor
+        V = (G * self.m / (2 * Rk)) ** 0.5
+        return (2 * Rk, V, 4)
 
 
 
@@ -172,6 +172,7 @@ class Starship(Entity):
         self.Vx = Vx
         self.Vy = Vy
         self.R = R
+        self.R_sh = R + 5
         self.color = color
         self.HP = 40 * self.R ** 2
 
@@ -182,6 +183,7 @@ class Starship(Entity):
         self.angle = 0
         self.thrusters_on = 0
         self.lazers_on = 0
+        self.shield_on = 0
 
     def esplosione_grande(self):
         return

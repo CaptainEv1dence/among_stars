@@ -32,20 +32,25 @@ def calculate_force(body, space_objects):
         r = ((body.x - obj.x)**2 + (body.y - obj.y)**2)**0.5
         r = max(r, body.R + obj.R) # и так сойдет
         an = (1 - 2 * (body.y >= obj.y)) * arccos((obj.x - body.x) / r)
-        body.Fx += cos(an) * gravitational_constant * obj.m * body.m / r**2
-        body.Fy += sin(an) * gravitational_constant * obj.m * body.m / r**2
+        if (body.type == "Kikorik" and obj.type != "DeathStar"):
+            None
+        else:
+            body.Fx += cos(an) * gravitational_constant * obj.m * body.m / r**2
+            body.Fy += sin(an) * gravitational_constant * obj.m * body.m / r**2
 
         if body.type == "Starship" and body.thrusters_on == 1 and body.Fuel >= 0.1:
             body.Fx += cos(body.angle) * Mf * Vf
             body.Fy -= sin(body.angle) * Mf * Vf
             body.Fuel -= 0.1
             body.m -= 0.1 * Mf
+
         if body.type == 'Rocket' and obj.type == 'Starship' and body.Fuel >= 0.1:
             body.Fx += cos(an) * Mf_rocket * Vf_rocket
             body.Fy -= sin(an) * Mf_rocket * Vf_rocket
             body.Fuel -= 0.1
             body.m -= 0.1 * Mf_rocket
-            
+
+
 def move_space_object(body, dt):
     """Перемещает тело в соответствии с действующей на него силой.
 
@@ -54,12 +59,9 @@ def move_space_object(body, dt):
     **body** — тело, которое нужно переместить.
     """
 
-
     ax = body.Fx / body.m
     body.Vx += ax * dt
     body.x += body.Vx * dt + ax * dt * dt / 2
-
-
 
     ay = body.Fy / body.m
     body.y += body.Vy * dt + ay * dt * dt / 2
@@ -88,6 +90,7 @@ def collision(body1, body2):
     y1 = visual.scale_y(body1.y)
     y2 = visual.scale_y(body2.y)
 
+
     if (body1.type == 'Lazer_beam' and body2.type != 'Lazer_beam' and body2.type != 'Starship'):
         if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
             body2.HP -= 50
@@ -100,10 +103,14 @@ def collision(body1, body2):
             return [1, 0, 1]
         else:
             return [1, 0, 0]
+
     if (body1.type!= 'Lazer_beam' and body2.type!= 'Lazer_beam'):
+
         if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
-            body1.HP -= (40 * (body1.R**2))*body2.m/(body1.m + body2.m)
-            body2.HP -= (40 * (body2.R**2))*body1.m/(body1.m + body2.m)
+            if not (body1.type == 'Starship' and body1.shield_on == 1):
+                body1.HP -= (40 * (body1.R**2))*body2.m/(body1.m + body2.m)
+            if not (body2.type == 'Starship' and body2.shield_on == 1):
+                body2.HP -= (40 * (body2.R**2))*body1.m/(body1.m + body2.m)
             k1 = body2.m/(body1.m + body2.m)
             k2 = body1.m/(body1.m + body2.m)
             v1 = (body1.Vx**2 + body1.Vy**2)**0.5

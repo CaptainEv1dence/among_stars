@@ -33,7 +33,21 @@ def calculate_force(body, space_objects):
         r = max(r, body.R + obj.R) # и так сойдет
         an = (1 - 2 * (body.y >= obj.y)) * arccos((obj.x - body.x) / r)
         if (body.type == "Kikorik" and obj.type != "DeathStar"):
-            None
+            if (body.number == 1):
+                body.x = obj.x
+                body.y = obj.y - 2*obj.R
+            if (body.number == 2):
+                body.x = obj.x + 2*obj.R*sin(72*pi/180)
+                body.y = obj.y - 2*obj.R*cos(72*pi/180)
+            if (body.number == 3):
+                body.x = obj.x + 2*obj.R*cos(54*pi/180)
+                body.y = obj.y + 2*obj.R*sin(54*pi/180)
+            if (body.number == 4):
+                body.x = obj.x - 2*obj.R*cos(54*pi/180)
+                body.y = obj.y + 2*obj.R*sin(54*pi/180)
+            if (body.number == 2):
+                body.x = obj.x - 2*obj.R*sin(72*pi/180)
+                body.y = obj.y - 2*obj.R*cos(72*pi/180)
         else:
             body.Fx += cos(an) * gravitational_constant * obj.m * body.m / r**2
             body.Fy += sin(an) * gravitational_constant * obj.m * body.m / r**2
@@ -58,14 +72,15 @@ def move_space_object(body, dt):
 
     **body** — тело, которое нужно переместить.
     """
-
-    ax = body.Fx / body.m
-    body.Vx += ax * dt
-    body.x += body.Vx * dt + ax * dt * dt / 2
-
-    ay = body.Fy / body.m
-    body.y += body.Vy * dt + ay * dt * dt / 2
-    body.Vy += ay * dt
+    if (body.type == 'Kikorik'):
+        None
+    else:    
+        ax = body.Fx / body.m
+        body.Vx += ax * dt
+        body.x += body.Vx * dt + ax * dt * dt / 2
+        ay = body.Fy / body.m
+        body.y += body.Vy * dt + ay * dt * dt / 2
+        body.Vy += ay * dt
 
 
 def recalculate_space_objects_positions(space_objects, dt):

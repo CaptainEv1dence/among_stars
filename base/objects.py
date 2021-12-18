@@ -49,7 +49,7 @@ class Star(CelestialBody):
     def esplosione_grande(self):
         return None
 
-class DeathStar:
+class DeathStar(CelestialBody):
     def __init__(self,type, m,x,y,Vx,Vy,R,color):
         self.type = "DeathStar"
         self.m = m
@@ -109,7 +109,7 @@ class Kikorik(Planet):
         self.HP = 40 * self.R ** 2
 
         self.rocket_timer = 1e5
-
+        self.number = number
     def rocket_strike(self):
         return None
 

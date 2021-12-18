@@ -31,23 +31,25 @@ def calculate_force(body, space_objects):
             continue  # тело не действует гравитационной силой на само себя!
         r = ((body.x - obj.x)**2 + (body.y - obj.y)**2)**0.5
         r = max(r, body.R + obj.R) # и так сойдет
+        f = visual.scale_factor
+        rr = obj.R/f
         an = (1 - 2 * (body.y >= obj.y)) * arccos((obj.x - body.x) / r)
-        if (body.type == "Kikorik" and obj.type != "DeathStar"):
+        if (body.type == "Kikorik" and obj.type = "DeathStar"):
             if (body.number == 1):
                 body.x = obj.x
-                body.y = obj.y - 2*obj.R
+                body.y = obj.y - 2*rr
             if (body.number == 2):
-                body.x = obj.x + 2*obj.R*sin(72*pi/180)
-                body.y = obj.y - 2*obj.R*cos(72*pi/180)
+                body.x = obj.x + 2*rr*sin(72*pi/180)
+                body.y = obj.y - 2*rr*cos(72*pi/180)
             if (body.number == 3):
-                body.x = obj.x + 2*obj.R*cos(54*pi/180)
-                body.y = obj.y + 2*obj.R*sin(54*pi/180)
+                body.x = obj.x + 2*rr*cos(54*pi/180)
+                body.y = obj.y + 2*rr*sin(54*pi/180)
             if (body.number == 4):
-                body.x = obj.x - 2*obj.R*cos(54*pi/180)
-                body.y = obj.y + 2*obj.R*sin(54*pi/180)
-            if (body.number == 2):
-                body.x = obj.x - 2*obj.R*sin(72*pi/180)
-                body.y = obj.y - 2*obj.R*cos(72*pi/180)
+                body.x = obj.x - 2*rr*cos(54*pi/180)
+                body.y = obj.y + 2*rr*sin(54*pi/180)
+            if (body.number == 5):
+                body.x = obj.x - 2*rr*sin(72*pi/180)
+                body.y = obj.y - 2*rr*cos(72*pi/180)
         else:
             body.Fx += cos(an) * gravitational_constant * obj.m * body.m / r**2
             body.Fy += sin(an) * gravitational_constant * obj.m * body.m / r**2

@@ -188,6 +188,17 @@ def collision(body1, body2):
             return[1, 1, 1]
         else:
             return[1, 1, 0]
-    
+    if (body1.type == 'Star' or body1.type == 'Kikorik') and (body2.type != 'Star' and body2.type != 'Kikorik'):
+        if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
+            body2.HP = 0
+            return[1, 1, -1]
+        else:
+            return[1, 1, 0]
+    if (body2.type == 'Star' or body1.type == 'Kikorik') and (body1.type != 'Star' and body2.type != 'Kikorik'):
+        if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
+            body1.HP = 0
+            return[1, 1, -1]
+        else:
+            return[1, 1, 0]
 if __name__ == "__main__":
     print("This module is not for direct call!")

@@ -68,12 +68,12 @@ def calculate_force(body, space_objects):
             body.m -= 0.1 * Mf_rocket
 
         if body.type == 'Bonus_energy':
-            body.Fx == 0
-            body.Fy == 0
+            body.Fx = 0
+            body.Fy = 0
 
         if body.type == 'Bonus_fuel':
-            body.Fx == 0
-            body.Fy == 0
+            body.Fx = 0
+            body.Fy = 0
 
 def move_space_object(body, dt):
     """Перемещает тело в соответствии с действующей на него силой.
@@ -164,25 +164,25 @@ def collision(body1, body2):
         return [0, 1, 0]
     if (body2.type == 'Lazer_beam' and body1.type == 'Starship'):
         return [1, 0, 0]
-    if (body1.type == 'Bonus_energy' and body2.type = 'Starship'):
+    if (body1.type == 'Bonus_energy' and body2.type == 'Starship'):
         if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
             body2.Energy += 30
             return[3, 1, 1]
         else:
             return[3, 1, 0]
-    if (body2.type == 'Bonus_energy' and body1.type = 'Starship'):
+    if (body2.type == 'Bonus_energy' and body1.type == 'Starship'):
         if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
             body1.Energy += 30
             return[1, 3, 1]
         else:
             return[1, 3, 0]
-    if (body1.type == 'Bonus_fuel' and body2.type = 'Starship'):
+    if (body1.type == 'Bonus_fuel' and body2.type == 'Starship'):
         if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
             body2.Fuel += 30
             return[4, 1, 1]
         else:
             return[4, 1, 0]
-    if (body2.type == 'Bonus_fuel' and body1.type = 'Starship'):
+    if (body2.type == 'Bonus_fuel' and body1.type == 'Starship'):
         if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
             body1.Fuel += 30
             return[1, 4, 1]

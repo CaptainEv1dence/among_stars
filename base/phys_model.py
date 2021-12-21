@@ -8,8 +8,8 @@ from math import asin as asin
 from math import pi as pi
 
 gravitational_constant = 6.67408E-11
-Mf = mass_lost_for_tick = 1E5
-Vf = initial_fuel_speed = 1E6
+Mf = mass_lost_for_tick = 1E4
+Vf = initial_fuel_speed = 1E5
 Mf_rocket = 1E4
 Vf_rocket = 1E5
 
@@ -58,8 +58,8 @@ def calculate_force(body, space_objects):
         if body.type == "Starship" and body.thrusters_on == 1 and body.Fuel >= 0.1:
             body.Fx += cos(body.angle) * Mf * Vf
             body.Fy -= sin(body.angle) * Mf * Vf
-            body.Fuel -= 0.1
-            body.m -= 0.1 * Mf
+            body.Fuel -= 0.05
+            body.m -= 0.05 * Mf
 
         if body.type == 'Rocket' and obj.type == 'Starship' and body.Fuel >= 0.1:
             body.Fx += cos(an) * Mf_rocket * Vf_rocket

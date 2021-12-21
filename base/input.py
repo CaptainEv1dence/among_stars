@@ -35,6 +35,9 @@ def read_space_objects_data_from_file(input_filename):
             elif object_type == "DeathStar":
                 ded = DeathStar(**parse_object_parameters(line))
                 objects.append(ded)
+            elif object_type == "Lazer_beam":
+                laz = DeathStar(**parse_object_parameters(line))
+                objects.append(laz)
 
             else:
                 print("Unknown space object")

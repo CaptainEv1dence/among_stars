@@ -215,7 +215,7 @@ def main():
 
     t_music = 2760/2.5
     t_rocket = 0
-    t_bonus = 40
+    t_bonus = 150
     t_b = 0
 
     music("kopatich.mp3")
@@ -224,8 +224,8 @@ def main():
 
         t_b += 1
         if (t_b >= t_bonus):
-            space_objects.append(DrawableObject(Bonus_energy(randint(5,995)/visual.scale_factor, randint(5, 795)/visual.scale_factor)))
-            space_objects.append(DrawableObject(Bonus_fuel(randint(5, 995)/visual.scale_factor, randint(5, 795)/visual.scale_factor)))
+            space_objects.append(DrawableObject(Bonus_energy((randint(5,995) - 500)/visual.scale_factor, (randint(5, 795) - 400)/visual.scale_factor)))
+            space_objects.append(DrawableObject(Bonus_fuel((randint(5,995) - 500)/visual.scale_factor, (randint(5, 795) - 400)/visual.scale_factor)))
             t_b = 0
 
 
@@ -259,6 +259,7 @@ def main():
                         space_objects.append(DrawableObject(
                             Kikorik(1, x1 + r * sin(72 * pi / 180), y1 - r * cos(72 * pi / 180), 0, 0, 16, (255, 255, 255),5)))
 
+
             #t_rocket += 1
             #
             #
@@ -284,6 +285,10 @@ def main():
 
             if (x < 0 or x > 1000 or y < 0 or y > 800) and (k.obj.type == "Lazer_beam" or k.obj.type == "Rocket"):
                 space_objects.remove(k)
+
+            if not (k.obj.type == "Lazer_beam" or k.obj.type == "Rocket"):
+                if (k.obj.HP <= 0):
+                    space_objects.remove(k)
 
         for ship in space_objects:
 

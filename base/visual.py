@@ -7,6 +7,7 @@ import objects
 import os
 from math import sin, cos, tan as sin, cos, tan
 from numpy import pi as pi
+
 """Модуль визуализации.
 Нигде, кроме этого модуля, не используются экранные координаты объектов.
 Функции, создающие гaрафические объекты и перемещающие их на экране, принимают физические координаты.
@@ -31,16 +32,18 @@ scale_factor = 1
 Тип: float
 
 Мера: количество пикселей на один метр."""
-#def background(screen):
- #   back = pygame.image.load('starsky.jpg')
-  #  screen.blit(back, (0, 0))
 
-def drawTextCentered(surface,rect_cent,  text, text_size, color):
+
+# def background(screen):
+#   back = pygame.image.load('starsky.jpg')
+#  screen.blit(back, (0, 0))
+
+def drawTextCentered(surface, rect_cent, text, text_size, color):
     """Функция добавляет текст с заданным размером на заданную поверхность.
     """
-    text_rect = font.get_rect(text, size = text_size)
+    text_rect = font.get_rect(text, size=text_size)
     text_rect.center = rect_cent
-    font.render_to(surface, text_rect, text, color, size = text_size)
+    font.render_to(surface, text_rect, text, color, size=text_size)
 
 
 def calculate_scale_factor(max_distance):
@@ -88,42 +91,42 @@ class Drawer:
     def __init__(self, screen):
         self.screen = screen
 
-    #back = pygame.image.load('starsky.jpg')
+    # back = pygame.image.load('starsky.jpg')
     def update(self, figures, screen):
         """Обновляет экран: заполняет его белым цветом,
         рисует все объекты из заданного массива.
         """
         self.screen.fill((0, 0, 0))
-        #back = pygame.image.load('starsky.jpg')
-        #screen.blit(back, (0, 0))
+        # back = pygame.image.load('starsky.jpg')
+        # screen.blit(back, (0, 0))
         for figure in figures:
             if figure.obj.type == "Starship":
 
                 figure.draw_starship(self.screen)
 
                 pg.draw.rect(self.screen, (0, 150, 150), [0, 700, 300, 100])
-                pg.draw.rect(self.screen, (255, 255, 0),[100, 720, figure.obj.Energy * 1.4, 20])
+                pg.draw.rect(self.screen, (255, 255, 0), [100, 720, figure.obj.Energy * 1.4, 20])
                 pg.draw.rect(self.screen, (255, 0, 255), [100, 760, figure.obj.Fuel * 1.4, 20])
                 drawTextCentered(self.screen, (50, 730), f"Energy: {int(figure.obj.Energy)}%", 18, (255, 255, 255))
                 drawTextCentered(self.screen, (40, 770), f"Fuel: {int(figure.obj.Fuel)}%", 18, (255, 255, 255))
                 pygame.display.flip()
-                #text_surface, rect = FONT.render(f" {figure.obj.Energy}", (255, 255, 255))
-                #screen.blit(text_surface)
+                # text_surface, rect = FONT.render(f" {figure.obj.Energy}", (255, 255, 255))
+                # screen.blit(text_surface)
 
             else:
                 figure.draw(self.screen)
             if figure.obj.type != 'CelestialBody' and figure.obj.type != 'Lazer_beam' and figure.obj.type != 'Rocket':
                 figure.draw_hp(self.screen)
 
-
         screen.blit()
         screen.update()
         pg.display.update()
 
-#self.image = starship_img = pg.image.load(os.path.join(r'C:\Users\petrk\among_stars\img', 'rock.png')).convert()
-        #self.image.set_colorkey((0, 0, 0))
-        #self.rect = self.image.get_rect()
-        #self.rect.center = (300, 300)
+
+# self.image = starship_img = pg.image.load(os.path.join(r'C:\Users\petrk\among_stars\img', 'rock.png')).convert()
+# self.image.set_colorkey((0, 0, 0))
+# self.rect = self.image.get_rect()
+# self.rect.center = (300, 300)
 
 class DrawableObject:
     def __init__(self, obj):
@@ -141,7 +144,7 @@ class DrawableObject:
         R = self.obj.R
         x = scale_x(self.obj.x)
         y = scale_y(self.obj.y)
-        pg.draw.rect(surface, (0, 255, 0),[x - R, y - R - 5, 2*R * (self.obj.HP/ (40 * R**2)), 3])
+        pg.draw.rect(surface, (0, 255, 0), [x - R, y - R - 5, 2 * R * (self.obj.HP / (40 * R ** 2)), 3])
 
     def draw_starship(self, surface):
         """Функция прорисовки космического корабля.
@@ -153,7 +156,7 @@ class DrawableObject:
 
         r = self.obj.R
         r2 = self.obj.R / sin((pi - an0) / 2)
-        an1 = 3 * pi / 4 - an0/4
+        an1 = 3 * pi / 4 - an0 / 4
 
         angle = self.obj.angle
 
@@ -164,8 +167,7 @@ class DrawableObject:
         y = scale_y(self.obj.y)
 
         if (self.obj.shield_on == 1):
-            pg.draw.circle(surface, (255, 255, 255), (x,y), self.obj.R_sh, 1)
+            pg.draw.circle(surface, (255, 255, 255), (x, y), self.obj.R_sh, 1)
 
-        #hitbox
+        # hitbox
         pg.draw.circle(surface, self.obj.color, (x, y), self.obj.R, 2)
-

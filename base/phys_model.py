@@ -10,8 +10,8 @@ from math import pi as pi
 gravitational_constant = 6.67408E-11
 Mf = mass_lost_for_tick = 1E4
 Vf = initial_fuel_speed = 1E5
-Mf_rocket = 1E1/4
-Vf_rocket = 1E1/4
+Mf_rocket = 1E1 / 4
+Vf_rocket = 1E1 / 4
 
 """Гравитационная постоянная Ньютона G"""
 
@@ -30,30 +30,30 @@ def calculate_force(body, space_objects):
     for obj in space_objects:
         if body == obj:
             continue  # тело не действует гравитационной силой на само себя!
-        r = ((body.x - obj.x)**2 + (body.y - obj.y)**2)**0.5
-        r = max(r, body.R + obj.R) # и так сойдет
+        r = ((body.x - obj.x) ** 2 + (body.y - obj.y) ** 2) ** 0.5
+        r = max(r, body.R + obj.R)  # и так сойдет
         f = visual.scale_factor
-        rr = obj.R/f
+        rr = obj.R / f
         an = (1 - 2 * (body.y >= obj.y)) * arccos((obj.x - body.x) / r)
         if (body.type == "Kikorik" and obj.type == "DeathStar"):
             if (body.number == 1):
                 body.x = obj.x
-                body.y = obj.y - 2*rr
+                body.y = obj.y - 2 * rr
             if (body.number == 2):
-                body.x = obj.x + 2*rr*sin(72*pi/180)
-                body.y = obj.y - 2*rr*cos(72*pi/180)
+                body.x = obj.x + 2 * rr * sin(72 * pi / 180)
+                body.y = obj.y - 2 * rr * cos(72 * pi / 180)
             if (body.number == 3):
-                body.x = obj.x + 2*rr*cos(54*pi/180)
-                body.y = obj.y + 2*rr*sin(54*pi/180)
+                body.x = obj.x + 2 * rr * cos(54 * pi / 180)
+                body.y = obj.y + 2 * rr * sin(54 * pi / 180)
             if (body.number == 4):
-                body.x = obj.x - 2*rr*cos(54*pi/180)
-                body.y = obj.y + 2*rr*sin(54*pi/180)
+                body.x = obj.x - 2 * rr * cos(54 * pi / 180)
+                body.y = obj.y + 2 * rr * sin(54 * pi / 180)
             if (body.number == 5):
-                body.x = obj.x - 2*rr*sin(72*pi/180)
-                body.y = obj.y - 2*rr*cos(72*pi/180)
+                body.x = obj.x - 2 * rr * sin(72 * pi / 180)
+                body.y = obj.y - 2 * rr * cos(72 * pi / 180)
         else:
-            body.Fx += cos(an) * gravitational_constant * obj.m * body.m / r**2
-            body.Fy += sin(an) * gravitational_constant * obj.m * body.m / r**2
+            body.Fx += cos(an) * gravitational_constant * obj.m * body.m / r ** 2
+            body.Fy += sin(an) * gravitational_constant * obj.m * body.m / r ** 2
 
         if body.type == "Starship" and body.thrusters_on == 1 and body.Fuel >= 0.1:
             body.Fx += cos(body.angle) * Mf * Vf
@@ -74,6 +74,7 @@ def calculate_force(body, space_objects):
             body.Fx = 0
             body.Fy = 0
 
+
 def move_space_object(body, dt):
     """Перемещает тело в соответствии с действующей на него силой.
 
@@ -83,7 +84,7 @@ def move_space_object(body, dt):
     """
     if (body.type == 'Kikorik'):
         None
-    else:    
+    else:
         ax = body.Fx / body.m
         body.Vx += ax * dt
         body.x += body.Vx * dt + ax * dt * dt / 2
@@ -106,6 +107,7 @@ def recalculate_space_objects_positions(space_objects, dt):
     for body in space_objects:
         move_space_object(body, dt)
 
+
 def collision(body1, body2):
     """Функция прописывает физику столкновения объектов различных типов.
     """
@@ -114,46 +116,47 @@ def collision(body1, body2):
     y1 = visual.scale_y(body1.y)
     y2 = visual.scale_y(body2.y)
 
-
     if (body1.type == 'Lazer_beam' and body2.type != 'Lazer_beam' and body2.type != 'Starship'):
-        if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
+        if (((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
             body2.HP -= 100
             return [0, 1, 1]
         else:
             return [0, 1, 0]
-    elif (body2.type == 'Lazer_beam' and body1.type != 'Lazer_beam' and body1.type != 'Starship'):
-        if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
+    elif body2.type == 'Lazer_beam' and body1.type != 'Lazer_beam' and body1.type != 'Starship':
+        if (((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
             body1.HP -= 100
             return [1, 0, 1]
         else:
             return [1, 0, 0]
 
-    elif (body1.type!= 'Lazer_beam' and body1.type != 'Rocket' and body2.type != 'Rocket' and body2.type!= 'Lazer_beam' and body1.type!= 'Bonus_energy' and body2.type!= 'Bonus_energy' and body1.type!= 'Bonus_fuel' and body2.type!= 'Bonus_fuel'):
+    elif (body1.type != 'Lazer_beam' and body1.type != 'Rocket' and body2.type != 'Rocket' and body2.type
+          != 'Lazer_beam' and body1.type != 'Bonus_energy' and body2.type != 'Bonus_energy' and body1.type
+          != 'Bonus_fuel' and body2.type != 'Bonus_fuel'):
 
-        if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
+        if (((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
             if not (body1.type == 'Starship' and body1.shield_on == 1):
-                body1.HP -= (40 * (body1.R**2))*body2.m/(body1.m + body2.m)
+                body1.HP -= (40 * (body1.R ** 2)) * body2.m / (body1.m + body2.m)
             if not (body2.type == 'Starship' and body2.shield_on == 1):
-                body2.HP -= (40 * (body2.R**2))*body1.m/(body1.m + body2.m)
-            k1 = body2.m/(body1.m + body2.m)
-            k2 = body1.m/(body1.m + body2.m)
-            v1 = (body1.Vx**2 + body1.Vy**2)**0.5
-            v2 = (body2.Vx**2 + body2.Vy**2)**0.5
-            an = atan2((y2 - y1),(x2 - x1))
-            an1 = atan2(y1,x1)
-            an2 = atan2(y2,x2)
-            v_y1 = v1*sin(an + an1)
-            v_x1 = (2*(body1.m >= body2.m) - 1)*k1*v1*cos(an + an1)
-            v_y2 = v2*sin(an + an2)
-            v_x2 = (2*(body2.m >= body1.m) - 1)*k2*v2*cos(an + an2)
-            v_11 = (v_x1**2 + v_y1**2)**0.5
-            v_22 = (v_x2**2 + v_y2**2)**0.5
-            an11 = asin(v_y1/v_11) - an
-            an22 = asin(v_y2/v_22) - an
-            body1.Vx = v_11*cos(an11)
-            body1.Vy = v_11*sin(an11)
-            body2.Vx = v_22*cos(an22)
-            body2.Vy = v_22*sin(an22)
+                body2.HP -= (40 * (body2.R ** 2)) * body1.m / (body1.m + body2.m)
+            k1 = body2.m / (body1.m + body2.m)
+            k2 = body1.m / (body1.m + body2.m)
+            v1 = (body1.Vx ** 2 + body1.Vy ** 2) ** 0.5
+            v2 = (body2.Vx ** 2 + body2.Vy ** 2) ** 0.5
+            an = atan2((y2 - y1), (x2 - x1))
+            an1 = atan2(y1, x1)
+            an2 = atan2(y2, x2)
+            v_y1 = v1 * sin(an + an1)
+            v_x1 = (2 * (body1.m >= body2.m) - 1) * k1 * v1 * cos(an + an1)
+            v_y2 = v2 * sin(an + an2)
+            v_x2 = (2 * (body2.m >= body1.m) - 1) * k2 * v2 * cos(an + an2)
+            v_11 = (v_x1 ** 2 + v_y1 ** 2) ** 0.5
+            v_22 = (v_x2 ** 2 + v_y2 ** 2) ** 0.5
+            an11 = asin(v_y1 / v_11) - an
+            an22 = asin(v_y2 / v_22) - an
+            body1.Vx = v_11 * cos(an11)
+            body1.Vy = v_11 * sin(an11)
+            body2.Vx = v_22 * cos(an22)
+            body2.Vy = v_22 * sin(an22)
             return [1, 1, 1]
         else:
             return [1, 1, 0]
@@ -163,89 +166,93 @@ def collision(body1, body2):
         return [0, 1, 0]
     elif (body2.type == 'Lazer_beam' and body1.type == 'Starship'):
         return [1, 0, 0]
-    
+
     elif (body1.type == 'Rocket' and body2.type == 'Rocket'):
         return [0, 0, 0]
     elif (body1.type == 'Rocket' and body2.type != 'Rocket' and body2.type != 'Kikorik'):
-        if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
+        if (((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
             if not (body2.type == 'Starship' and body2.shield_on == 1):
                 body2.HP -= 10
             return [0, 1, 1]
         else:
             return [0, 1, 0]
     elif (body2.type == 'Rocket' and body1.type != 'Rocket' and body1.type != 'Kikorik'):
-        if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
+        if (((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
             if not (body1.type == 'Starship' and body1.shield_on == 1):
                 body1.HP -= 10
             return [1, 0, 1]
         else:
             return [0, 1, 0]
     elif (body1.type == 'Rocket' and body2.type == 'Kikorik'):
-        if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
+        if (((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
             return [0, 1, 1]
         else:
             return [0, 1, 0]
     elif (body2.type == 'Rocket' and body1.type == 'Kikorik'):
-        if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
+        if (((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
             return [1, 0, 1]
         else:
             return [1, 0, 0]
     elif (body1.type == 'Bonus_energy' and body2.type == 'Starship'):
-        if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
-            if(body2.Energy <= 70):
+        if (((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
+            if (body2.Energy <= 70):
                 body2.Energy += 30
             else:
                 body2.Energy = 100
 
             body1.HP = 0
-            return[3, 1, 1]
+            return [3, 1, 1]
         else:
-            return[3, 1, 0]
+            return [3, 1, 0]
     elif (body2.type == 'Bonus_energy' and body1.type == 'Starship'):
-        if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
-            if(body1.Energy <= 70):
+        if (((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
+            if (body1.Energy <= 70):
                 body1.Energy += 30
             else:
                 body1.Energy = 100
 
             body2.HP = 0
-            return[1, 3, 1]
+            return [1, 3, 1]
         else:
-            return[1, 3, 0]
+            return [1, 3, 0]
     elif (body1.type == 'Bonus_fuel' and body2.type == 'Starship'):
-        if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
-            if(body2.Fuel <= 70):
+        if (((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
+            if (body2.Fuel <= 70):
                 body2.Fuel += 30
             else:
                 body2.Fuel = 100
             body1.HP = 0
-            return[4, 1, 1]
+            return [4, 1, 1]
         else:
-            return[4, 1, 0]
+            return [4, 1, 0]
     elif (body2.type == 'Bonus_fuel' and body1.type == 'Starship'):
-        if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
-            if(body1.Fuel <= 70):
+        if (((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
+            if (body1.Fuel <= 70):
                 body1.Fuel += 30
             else:
                 body1.Fuel = 100
             body2.HP = 0
-            return[1, 4, 1]
+            return [1, 4, 1]
         else:
-            return[1, 4, 0]
-    elif (body1.type == 'Star' or body1.type == 'Kikorik' or body1.type == 'DeathStar') and (body2.type != 'DeathStar' and body2.type != 'Kikorik' and body2.type != 'Star'):
-        if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
+            return [1, 4, 0]
+    elif (body1.type == 'Star' or body1.type == 'Kikorik' or body1.type == 'DeathStar') and (
+            body2.type != 'DeathStar' and body2.type != 'Kikorik' and body2.type != 'Star'):
+        if (((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
             body2.HP = 0
-            return[1, 1, -1]
+            return [1, 1, -1]
         else:
-            return[1, 1, 0]
-    elif (body2.type == 'Star' or body2.type == 'Kikorik' or body2.type == 'DeathStar') and (body1.type != 'DeathStar' and body1.type != 'Kikorik' and body1.type != 'Star'):
-        if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
+            return [1, 1, 0]
+    elif (body2.type == 'Star' or body2.type == 'Kikorik' or body2.type == 'DeathStar') and (
+            body1.type != 'DeathStar' and body1.type != 'Kikorik' and body1.type != 'Star'):
+        if (((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
             body1.HP = 0
-            return[1, 1, -1]
+            return [1, 1, -1]
         else:
-            return[1, 1, 0]
-   #elif () 
+            return [1, 1, 0]
+    # elif ()
     else:
-        return[1, 1, 0] 
+        return [1, 1, 0]
+
+
 if __name__ == "__main__":
     print("This module is not for direct call!")

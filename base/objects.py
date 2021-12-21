@@ -3,9 +3,9 @@
 from math import sin, cos, acos, tan, pi as sin, cos, atan, acos, tan, pi
 import visual
 
-#consts
+# consts
 G = gravitational_constant = 6.67408E-11
-HPCONST = 1E-22/5.974
+HPCONST = 1E-22 / 5.974
 M_FUEL = 1.0
 M_ENERGY = 1.0
 
@@ -26,9 +26,8 @@ class CelestialBody:
         self.HP = 40 * self.R ** 2
 
 
-
 class Star(CelestialBody):
-    def __init__(self, m,x,y,Vx,Vy,R,color):
+    def __init__(self, m, x, y, Vx, Vy, R, color):
         self.type = 'Star'
         self.R = int(R)
         self.color = color
@@ -42,8 +41,9 @@ class Star(CelestialBody):
         self.HP = 40 * self.R ** 2
         self.windtimer = 1e7
 
+
 class DeathStar(CelestialBody):
-    def __init__(self,type, m,x,y,Vx,Vy,R,color):
+    def __init__(self, type, m, x, y, Vx, Vy, R, color):
         self.type = "DeathStar"
         self.m = m
         self.x = x
@@ -62,13 +62,13 @@ class DeathStar(CelestialBody):
     def spawn(self):
         """Функция выдает параметры для добавления Смешариков.
         """
-        Rk = self.R/visual.scale_factor
+        Rk = self.R / visual.scale_factor
         V = (G * self.m / (2 * Rk)) ** 0.5
         return (2 * Rk, V, 4)
 
 
 class Planet(CelestialBody):
-    def __init__(self, m,x,y,Vx,Vy,R,color):
+    def __init__(self, m, x, y, Vx, Vy, R, color):
         self.type = 'Planet'
         self.m = m
         self.x = x
@@ -81,8 +81,9 @@ class Planet(CelestialBody):
         self.color = color
         self.HP = 40 * self.R ** 2
 
+
 class Kikorik(Planet):
-    def __init__(self, m,x,y,Vx,Vy,R,color, number):
+    def __init__(self, m, x, y, Vx, Vy, R, color, number):
         self.type = 'Kikorik'
         self.m = m
         self.x = x
@@ -98,10 +99,9 @@ class Kikorik(Planet):
         self.rocket_timer = 1e5
         self.number = number
 
-    
+
 class Bullet:
     def __init__(self, type, R, color, m, x, y, Vx, Vy):
-        
         self.type = type
         self.R = int(R)
         self.color = color
@@ -127,8 +127,9 @@ class Lazer_beam(Bullet):
         self.R = 1
         self.color = (255, 255, 255)
 
+
 class Rocket(Bullet):
-    def __init__(self, x,y,Vx,Vy):
+    def __init__(self, x, y, Vx, Vy):
         self.type = 'Rocket'
         self.m = 1
         self.x = x
@@ -143,11 +144,13 @@ class Rocket(Bullet):
 
         self.Fuel = 10.0
 
+
 class Entity(CelestialBody):
     None
 
+
 class Starship(Entity):
-    def __init__(self,type, m,x,y,Vx,Vy,R,color):
+    def __init__(self, type, m, x, y, Vx, Vy, R, color):
         self.type = "Starship"
         self.m = m
         self.x = x
@@ -182,10 +185,11 @@ class Starship(Entity):
         if ((x - x_s) ** 2 + (y - y_s) ** 2) ** 0.5 == 0:
             self.angle = 0
         else:
-            self.angle = ( 2 * (y >= y_s) - 1) * acos((x_s - x) / ((x - x_s) ** 2 + (y - y_s) ** 2) ** 0.5)
+            self.angle = (2 * (y >= y_s) - 1) * acos((x_s - x) / ((x - x_s) ** 2 + (y - y_s) ** 2) ** 0.5)
+
 
 class Bonus_energy(Planet):
-    def __init__(self, x,y):
+    def __init__(self, x, y):
         self.type = 'Bonus_energy'
         self.m = 1
         self.x = x
@@ -198,8 +202,9 @@ class Bonus_energy(Planet):
         self.color = (255, 255, 0)
         self.HP = 40 * self.R ** 2
 
+
 class Bonus_fuel(Planet):
-    def __init__(self, x,y):
+    def __init__(self, x, y):
         self.type = 'Bonus_fuel'
         self.m = 1
         self.x = x

@@ -4,6 +4,7 @@
 from objects import Star, Planet, CelestialBody, Starship, DeathStar
 from visual import DrawableObject
 
+
 def read_space_objects_data_from_file(input_filename):
     """Cчитывает данные о космических объектах из файла, создаёт сами объекты
     и вызывает создание их графических образов
@@ -64,23 +65,21 @@ def parse_object_parameters(line):
     **star** — объект !!звезды.
     """
     s = line.split()
-    for i in range (len(s)):
+    for i in range(len(s)):
         try:
             s[i] = int(s[i])
         except:
             continue
 
-    pars = {'type' : s[0],
-    'R' : float(s[1]),
-    'color' : s[2],
-    'm' : float(s[3]),
-    'x' : float(s[4]),
-    'y' : float(s[5]),
-    'Vx' : float(s[6]),
-    'Vy' : float(s[7])}
+    pars = {'type': s[0],
+            'R': float(s[1]),
+            'color': s[2],
+            'm': float(s[3]),
+            'x': float(s[4]),
+            'y': float(s[5]),
+            'Vx': float(s[6]),
+            'Vy': float(s[7])}
     return pars
-
-
 
 
 def write_space_objects_data_to_file(output_filename, space_objects):

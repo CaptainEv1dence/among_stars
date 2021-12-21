@@ -33,6 +33,7 @@ time_scale = 1000.0
 space_objects = []
 """Список космических объектов."""
 
+
 def music(name):
     """ Функция, отвечающая за воспроизведение музыки.
     """
@@ -41,6 +42,7 @@ def music(name):
 
 
 music("big_kopatich.mp3")
+
 
 def execution(delta):
     """Функция исполнения -- выполняется циклически, вызывая обработку всех небесных тел,
@@ -94,6 +96,7 @@ def open_file():
     max_distance = max([max(abs(obj.obj.x), abs(obj.obj.y)) for obj in space_objects])
     calculate_scale_factor(max_distance)
 
+
 def handle_events(events, menu):
     """Функция обработки событий
     """
@@ -104,33 +107,31 @@ def handle_events(events, menu):
         if event.type == pg.QUIT:
             alive = False
         elif event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
-                for ship in space_objects:
-                    if ship.obj.type == "Starship" and ship.obj.Energy > 0.2:
-                        ship.obj.lazers_on = 1
+            for ship in space_objects:
+                if ship.obj.type == "Starship" and ship.obj.Energy > 0.2:
+                    ship.obj.lazers_on = 1
         elif event.type == pg.MOUSEBUTTONDOWN and event.button == 3:
-                for ship in space_objects:
-                    if ship.obj.type == "Starship":
-                        ship.obj.shield_on = 1
+            for ship in space_objects:
+                if ship.obj.type == "Starship":
+                    ship.obj.shield_on = 1
         elif event.type == pg.KEYDOWN:
             if event.key == pg.K_w:
                 for ship in space_objects:
                     if ship.obj.type == "Starship":
-                            ship.obj.thrusters_on = 1
+                        ship.obj.thrusters_on = 1
         elif event.type == pg.MOUSEBUTTONUP and event.button == 1:
             for ship in space_objects:
                 if ship.obj.type == "Starship":
                     ship.obj.lazers_on = 0
         elif event.type == pg.MOUSEBUTTONUP and event.button == 3:
-                for ship in space_objects:
-                    if ship.obj.type == "Starship":
-                        ship.obj.shield_on = 0
+            for ship in space_objects:
+                if ship.obj.type == "Starship":
+                    ship.obj.shield_on = 0
         elif event.type == pg.KEYUP:
             if event.key == pg.K_w:
                 for ship in space_objects:
-                    if ship.obj.type == "Starship" :
-                            ship.obj.thrusters_on = 0
-
-
+                    if ship.obj.type == "Starship":
+                        ship.obj.thrusters_on = 0
 
 
 def slider_to_real(val):
@@ -182,7 +183,6 @@ def init_ui(screen):
     return menu, box, timer
 
 
-
 def main():
     """Главная функция главного модуля.
     """
@@ -213,29 +213,29 @@ def main():
     menu, box, timer = init_ui(screen)
     perform_execution = True
 
-
-    #t_music = 2760/2.5
+    # t_music = 2760/2.5
     t_rocket = 2000
     t_r = 0
     t_bonus = 300
     t_b = 0
 
-    #music("kopatich.mp3")
+    # music("kopatich.mp3")
 
     while alive:
 
         t_b += 1
         if (t_b >= t_bonus):
-            space_objects.append(DrawableObject(Bonus_energy((randint(5,995) - 500)/visual.scale_factor, (randint(5, 795) - 400)/visual.scale_factor)))
-            space_objects.append(DrawableObject(Bonus_fuel((randint(5,995) - 500)/visual.scale_factor, (randint(5, 795) - 400)/visual.scale_factor)))
+            space_objects.append(DrawableObject(Bonus_energy((randint(5, 995) - 500) / visual.scale_factor,
+                                                             (randint(5, 795) - 400) / visual.scale_factor)))
+            space_objects.append(DrawableObject(Bonus_fuel((randint(5, 995) - 500) / visual.scale_factor,
+                                                           (randint(5, 795) - 400) / visual.scale_factor)))
             t_b = 0
 
+        # t_music -= 1
 
-        #t_music -= 1
-
-        #if (t_music <= 0):
-         #   music("kopatich.mp3")
-          #  t_music = 2760/2.5
+        # if (t_music <= 0):
+        #   music("kopatich.mp3")
+        #  t_music = 2760/2.5
 
         for k in space_objects:
             x = visual.scale_x(k.obj.x)
@@ -245,25 +245,28 @@ def main():
             vx = k.obj.Vx
             vy = k.obj.Vy
 
-
             if k.obj.type == "DeathStar":
                 if k.obj.amount == 0:
                     k.obj.amount += 4
                     a = k.obj.spawn()
-                    if (a[2]!=0):
+                    if (a[2] != 0):
                         v = a[1]
                         r = a[0]
-                        space_objects.append(DrawableObject(Kikorik(1, x1 , y1 - r, 0, 0, 16, (255, 255, 255),1)))
-                        space_objects.append(DrawableObject(Kikorik(1, x1 + r*sin(72*pi/180), y1 - r*cos(72*pi/180), 0, 0, 16, (255, 255, 255),2)))
-                        space_objects.append(DrawableObject(Kikorik(1, x1 + r*cos(54*pi/180), y1 + r*sin(54*pi/180), 0, 0, 16, (255, 255, 255),3)))
+                        space_objects.append(DrawableObject(Kikorik(1, x1, y1 - r, 0, 0, 16, (255, 255, 255), 1)))
                         space_objects.append(DrawableObject(
-                            Kikorik(1, x1 - r * cos(54 * pi / 180), y1 + r * sin(54 * pi / 180), 0, 0, 16, (255, 255, 255),4)))
+                            Kikorik(1, x1 + r * sin(72 * pi / 180), y1 - r * cos(72 * pi / 180), 0, 0, 16,
+                                    (255, 255, 255), 2)))
                         space_objects.append(DrawableObject(
-                            Kikorik(1, x1 + r * sin(72 * pi / 180), y1 - r * cos(72 * pi / 180), 0, 0, 16, (255, 255, 255),5)))
-
+                            Kikorik(1, x1 + r * cos(54 * pi / 180), y1 + r * sin(54 * pi / 180), 0, 0, 16,
+                                    (255, 255, 255), 3)))
+                        space_objects.append(DrawableObject(
+                            Kikorik(1, x1 - r * cos(54 * pi / 180), y1 + r * sin(54 * pi / 180), 0, 0, 16,
+                                    (255, 255, 255), 4)))
+                        space_objects.append(DrawableObject(
+                            Kikorik(1, x1 + r * sin(72 * pi / 180), y1 - r * cos(72 * pi / 180), 0, 0, 16,
+                                    (255, 255, 255), 5)))
 
             t_r += 1
-
 
             if t_r >= t_rocket:
                 t_r = 0
@@ -278,14 +281,12 @@ def main():
                             if m.obj.type == "Starship":
                                 x_s = m.obj.x
                                 y_s = m.obj.y
-                                angle = random.uniform(0, 2*pi-0.001)
-                                space_objects.append(DrawableObject(Rocket(x1 + r*cos(angle),y1 -  r* sin(angle), 0,0)))
-
-
-
+                                angle = random.uniform(0, 2 * pi - 0.001)
+                                space_objects.append(
+                                    DrawableObject(Rocket(x1 + r * cos(angle), y1 - r * sin(angle), 0, 0)))
 
             for c in space_objects:
-                a = collision(k.obj,c.obj)
+                a = collision(k.obj, c.obj)
 
                 if a[2] == 1:
                     if a[0] == 0:
@@ -303,7 +304,7 @@ def main():
         for ship in space_objects:
 
             if ship.obj.type == "Starship":
-                #print(ship.obj.Fuel, ship.obj.Energy)
+                # print(ship.obj.Fuel, ship.obj.Energy)
 
                 if ship.obj.shield_on == 1:
 
@@ -313,18 +314,18 @@ def main():
                 if ship.obj.lazers_on == 1:
                     x = ship.obj.x
                     y = ship.obj.y
-                    Vx = cos(ship.obj.angle)*V
-                    Vy = -sin(ship.obj.angle)*V
+                    Vx = cos(ship.obj.angle) * V
+                    Vy = -sin(ship.obj.angle) * V
 
                     if (ship.obj.Energy > 0.6):
-                        space_objects.append(DrawableObject(Lazer_beam(x,y,Vx,Vy)))
+                        space_objects.append(DrawableObject(Lazer_beam(x, y, Vx, Vy)))
                         ship.obj.Energy -= 0.6
 
                     if (len(space_objects) >= 150):
                         space_objects.pop(7)
 
                 ship.obj.targetting(pg.mouse.get_pos())
-                #print(ship.obj.thrusters_on,ship.obj.angle * 180 / pi, len(space_objects))
+                # print(ship.obj.thrusters_on,ship.obj.angle * 180 / pi, len(space_objects))
         handle_events(pg.event.get(), menu)
         cur_time = time.perf_counter()
 
@@ -332,7 +333,6 @@ def main():
             execution((cur_time - last_time) * time_scale)
             text = "%d seconds passed" % (int(model_time))
             timer.set_text(text)
-
 
         last_time = cur_time
         drawer.update(space_objects, box)

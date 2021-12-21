@@ -139,7 +139,7 @@ class Rocket(Bullet):
         self.Vy = Vy
         self.R = 3
         self.color = (255, 0, 0)
-
+        self.HP = 11 * self.R ** 2
 
         self.Fuel = 10.0
 
@@ -200,7 +200,7 @@ class Bonus_energy(Planet):
 
 class Bonus_fuel(Planet):
     def __init__(self, x,y):
-        self.type = 'Bonus_energy'
+        self.type = 'Bonus_fuel'
         self.m = 1
         self.x = x
         self.y = y

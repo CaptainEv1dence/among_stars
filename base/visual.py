@@ -112,7 +112,7 @@ class Drawer:
 
             else:
                 figure.draw(self.screen)
-            if figure.obj.type != 'CelestialBody' and figure.obj.type != 'Lazer_beam':
+            if figure.obj.type != 'CelestialBody' and figure.obj.type != 'Lazer_beam' and figure.obj.type != 'Rocket':
                 figure.draw_hp(self.screen)
 
 

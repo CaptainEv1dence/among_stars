@@ -10,8 +10,8 @@ from math import pi as pi
 gravitational_constant = 6.67408E-11
 Mf = mass_lost_for_tick = 1E4
 Vf = initial_fuel_speed = 1E5
-Mf_rocket = 1E1
-Vf_rocket = 1E2
+Mf_rocket = 1E1/4
+Vf_rocket = 1E1/4
 
 """Гравитационная постоянная Ньютона G"""
 
@@ -62,9 +62,9 @@ def calculate_force(body, space_objects):
             body.m -= 0.02 * Mf
 
         if body.type == 'Rocket' and obj.type == 'Starship' and body.Fuel >= 0.1:
-            body.Fx -= cos(an) * Mf_rocket * Vf_rocket
+            body.Fx += cos(an) * Mf_rocket * Vf_rocket
             body.Fy += sin(an) * Mf_rocket * Vf_rocket
-            body.Fuel -= 0.1
+            body.Fuel -= 0.2
 
         if body.type == 'Bonus_energy':
             body.Fx = 0

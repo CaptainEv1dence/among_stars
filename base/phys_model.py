@@ -101,7 +101,7 @@ def recalculate_space_objects_positions(space_objects, dt):
         move_space_object(body, dt)
 
 def collision(body1, body2):
-    """
+    """Функция прописывает физику столкновения объектов различных типов.
     """
     x1 = visual.scale_x(body1.x)
     x2 = visual.scale_x(body2.x)

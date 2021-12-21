@@ -31,6 +31,14 @@ time_scale = 1000.0
 space_objects = []
 """Список космических объектов."""
 
+def music(name):
+    """ Функция, отвечающая за воспроизведение музыки.
+    """
+    pygame.mixer.music.load(name)
+    pygame.mixer.music.play()
+
+
+#music("kopatich.mp3")
 
 def execution(delta):
     """Функция исполнения -- выполняется циклически, вызывая обработку всех небесных тел,
@@ -85,7 +93,8 @@ def open_file():
     calculate_scale_factor(max_distance)
 
 def handle_events(events, menu):
-    '''функция обработки событий'''
+    """Функция обработки событий
+    """
     k = 0
     global alive
     for event in events:
@@ -202,9 +211,14 @@ def main():
     menu, box, timer = init_ui(screen)
     perform_execution = True
 
-    d = 0
 
+    d = 2760/2.5
+    music("kopatich.mp3")
     while alive:
+        d -= 1
+        if (d <= 0):
+            music("kopatich.mp3")
+            d = 2760/2.5
         for k in space_objects:
             x = visual.scale_x(k.obj.x)
             y = visual.scale_y(k.obj.y)

@@ -9,7 +9,7 @@ from math import sin, cos, tan as sin, cos, tan
 from numpy import pi as pi
 """Модуль визуализации.
 Нигде, кроме этого модуля, не используются экранные координаты объектов.
-Функции, создающие гaрафические объекты и перемещающие их на экране, принимают физические координаты
+Функции, создающие гaрафические объекты и перемещающие их на экране, принимают физические координаты.
 """
 
 header_font = "Arial-16"
@@ -31,15 +31,21 @@ scale_factor = 1
 Тип: float
 
 Мера: количество пикселей на один метр."""
+#def background(screen):
+ #   back = pygame.image.load('starsky.jpg')
+  #  screen.blit(back, (0, 0))
 
 def drawTextCentered(surface,rect_cent,  text, text_size, color):
+    """Функция добавляет текст с заданным размером на заданную поверхность.
+    """
     text_rect = font.get_rect(text, size = text_size)
     text_rect.center = rect_cent
     font.render_to(surface, text_rect, text, color, size = text_size)
 
 
 def calculate_scale_factor(max_distance):
-    """Вычисляет значение глобальной переменной **scale_factor** по данной характерной длине"""
+    """Вычисляет значение глобальной переменной **scale_factor** по данной характерной длине.
+    """
     global scale_factor
     scale_factor = 0.4 * min(window_height, window_width) / max_distance
     print('Scale factor:', scale_factor)
@@ -82,10 +88,14 @@ class Drawer:
     def __init__(self, screen):
         self.screen = screen
 
+    #back = pygame.image.load('starsky.jpg')
     def update(self, figures, screen):
-        '''обновляет экран: заполняет его белым цветом, 
-        рисует все объекты из заданного массива'''
+        """Обновляет экран: заполняет его белым цветом,
+        рисует все объекты из заданного массива.
+        """
         self.screen.fill((0, 0, 0))
+        #back = pygame.image.load('starsky.jpg')
+        #screen.blit(back, (0, 0))
         for figure in figures:
             if figure.obj.type == "Starship":
 
@@ -106,7 +116,6 @@ class Drawer:
                 figure.draw_hp(self.screen)
 
 
-
         screen.blit()
         screen.update()
         pg.display.update()
@@ -121,18 +130,22 @@ class DrawableObject:
         self.obj = obj
 
     def draw(self, surface):
-        '''рисует круглый объект на заданной поверхности, 
-        используя параметры объекта: радиус, цвет, местоположение'''
+        """Рисует круглый объект на заданной поверхности,
+        используя параметры объекта: радиус, цвет, местоположение.
+        """
         pg.draw.circle(surface, self.obj.color, (scale_x(self.obj.x), scale_y(self.obj.y)), self.obj.R)
 
     def draw_hp(self, surface):
+        """Функция отображает состояние здоровья (hp) объектов.
+        """
         R = self.obj.R
         x = scale_x(self.obj.x)
         y = scale_y(self.obj.y)
         pg.draw.rect(surface, (0, 255, 0),[x - R, y - R - 5, 2*R * (self.obj.HP/ (40 * R**2)), 3])
 
     def draw_starship(self, surface):
-
+        """Функция прорисовки космического корабля.
+        """
         w = 6
         pi = 3.14159
 
@@ -156,19 +169,3 @@ class DrawableObject:
         #hitbox
         pg.draw.circle(surface, self.obj.color, (x, y), self.obj.R, 2)
 
-
-        #visual body
-        #pg.draw.polygon(surface, self.obj.color, [(x + 2 * r * cos(angle), y + 2 * r * sin(angle)),
-         #            (x - r * cos(angle) + w * cos(angle + pi/2), y - r * sin(angle) + w * sin(angle + pi/2)),
-          #           (x - r * cos(angle) + w * cos(angle - pi/2), y - r * sin(angle) + w * sin(angle - pi/2))])
-        #pg.draw.polygon(surface, self.obj.color, [(x + 10, y ),
-        #                     (x - 10.232323, y + 10),
-        #                     (x - 10, y - 10)])
-
-        #thruster
-        #k = 0.1
-        #tr_h = 10
-        #tr_w = 3
-        #pg.draw.polygon(surface, (255,0,0), [(x, y),
-        #                                     (x + tr_h * cos(self.obj.angle + 3*pi/4), y + tr_h * sin(self.obj.angle + 3*pi/4) ),
-        #                                     (x + tr_h * cos(self.obj.angle - 3*pi/4), y + tr_h * sin(self.obj.angle - 3*pi/4) )])

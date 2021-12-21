@@ -39,7 +39,7 @@ def music(name):
     pygame.mixer.music.play()
 
 
-#music("kopatich.mp3")
+music("big_kopatich.mp3")
 
 def execution(delta):
     """Функция исполнения -- выполняется циклически, вызывая обработку всех небесных тел,
@@ -213,13 +213,13 @@ def main():
     perform_execution = True
 
 
-    t_music = 2760/2.5
+    #t_music = 2760/2.5
     t_rocket = 100
     t_r = 0
     t_bonus = 300
     t_b = 0
 
-    music("kopatich.mp3")
+    #music("kopatich.mp3")
 
     while alive:
 
@@ -230,11 +230,11 @@ def main():
             t_b = 0
 
 
-        t_music -= 1
+        #t_music -= 1
 
-        if (t_music <= 0):
-            music("kopatich.mp3")
-            t_music = 2760/2.5
+        #if (t_music <= 0):
+         #   music("kopatich.mp3")
+          #  t_music = 2760/2.5
 
         for k in space_objects:
             x = visual.scale_x(k.obj.x)

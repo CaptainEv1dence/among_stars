@@ -166,25 +166,43 @@ def collision(body1, body2):
         return [1, 0, 0]
     elif (body1.type == 'Bonus_energy' and body2.type == 'Starship'):
         if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
-            body2.Energy += 30
+            if(body2.Energy <= 70):
+                body2.Energy += 30
+            else:
+                body2.Energy = 100
+
+            body1.HP = 0
             return[3, 1, 1]
         else:
             return[3, 1, 0]
     elif (body2.type == 'Bonus_energy' and body1.type == 'Starship'):
         if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
-            body1.Energy += 30
+            if(body1.Energy <= 70):
+                body1.Energy += 30
+            else:
+                body1.Energy = 100
+
+            body2.HP = 0
             return[1, 3, 1]
         else:
             return[1, 3, 0]
     elif (body1.type == 'Bonus_fuel' and body2.type == 'Starship'):
         if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
-            body2.Fuel += 30
+            if(body2.Fuel <= 70):
+                body2.Fuel += 30
+            else:
+                body2.Fuel = 100
+            body1.HP = 0
             return[4, 1, 1]
         else:
             return[4, 1, 0]
     elif (body2.type == 'Bonus_fuel' and body1.type == 'Starship'):
         if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
-            body1.Fuel += 30
+            if(body1.Fuel <= 70):
+                body1.Fuel += 30
+            else:
+                body1.Fuel = 100
+            body2.HP = 0
             return[1, 4, 1]
         else:
             return[1, 4, 0]
@@ -200,5 +218,7 @@ def collision(body1, body2):
             return[1, 1, -1]
         else:
             return[1, 1, 0]
+    else:
+        return[1, 1, 0] 
 if __name__ == "__main__":
     print("This module is not for direct call!")

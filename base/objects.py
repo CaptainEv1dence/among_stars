@@ -209,5 +209,5 @@ class Bonus_fuel(Planet):
         self.Vx = 0
         self.Vy = 0
         self.R = 5
-        self.color = (40, 40, 0)
+        self.color = (255, 0, 255)
         self.HP = 40 * self.R ** 2

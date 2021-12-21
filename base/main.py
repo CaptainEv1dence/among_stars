@@ -12,6 +12,7 @@ import numpy as np
 from math import sin as sin
 from math import cos as cos
 from math import pi as pi
+from random import randint as randint
 
 timer = None
 
@@ -212,13 +213,28 @@ def main():
     perform_execution = True
 
 
-    d = 2760/2.5
+    t_music = 2760/2.5
+    t_rocket = 0
+    t_bonus = 40
+    t_b = 0
+
     music("kopatich.mp3")
+
     while alive:
-        d -= 1
-        if (d <= 0):
+
+        t_b += 1
+        if (t_b >= t_bonus):
+            space_objects.append(DrawableObject(Bonus_energy(randint(5,995)/visual.scale_factor, randint(5, 795)/visual.scale_factor)))
+            space_objects.append(DrawableObject(Bonus_fuel(randint(5, 995)/visual.scale_factor, randint(5, 795)/visual.scale_factor)))
+            t_b = 0
+
+
+        t_music -= 1
+
+        if (t_music <= 0):
             music("kopatich.mp3")
-            d = 2760/2.5
+            t_music = 2760/2.5
+
         for k in space_objects:
             x = visual.scale_x(k.obj.x)
             y = visual.scale_y(k.obj.y)
@@ -242,6 +258,18 @@ def main():
                             Kikorik(1, x1 - r * cos(54 * pi / 180), y1 + r * sin(54 * pi / 180), 0, 0, 16, (255, 255, 255),4)))
                         space_objects.append(DrawableObject(
                             Kikorik(1, x1 + r * sin(72 * pi / 180), y1 - r * cos(72 * pi / 180), 0, 0, 16, (255, 255, 255),5)))
+
+            #t_rocket += 1
+            #
+            #
+            #if t_rocket >= 100:
+            #    t_rocket = 0
+            #    for b in space_objects:
+            #        x = visual.scale_x(b.obj.x)
+            #        y = visual.scale_y(b.obj.y)
+            #        if d.obj.type == "Kikorik":
+            #            space_objects.append(DrawableObject(Rocket()))
+
 
 
 

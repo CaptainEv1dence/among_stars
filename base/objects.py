@@ -215,8 +215,35 @@ class Starship(Entity):
         self.thrusters_on = 0
 
 
-class Bonus(Entity):
-    None
+class Bonus_energy(Planet):
+    def __init__(self, x,y):
+        self.type = 'Bonus_energy'
+        self.m = 1
+        self.x = x
+        self.y = y
+        self.Fx = 0
+        self.Fy = 0
+        self.Vx = 0
+        self.Vy = 0
+        self.R = 5
+        self.color = (255, 255, 0)
+        self.HP = 40 * self.R ** 2
+
+class Bonus_fuel(Planet):
+    def __init__(self, x,y):
+        self.type = 'Bonus_energy'
+        self.m = 1
+        self.x = x
+        self.y = y
+        self.Fx = 0
+        self.Fy = 0
+        self.Vx = 0
+        self.Vy = 0
+        self.R = 5
+        self.color = (40, 40, 0)
+        self.HP = 40 * self.R ** 2
+
+
 class Fuel(Entity):
     None
 

@@ -42,13 +42,6 @@ class Star(CelestialBody):
         self.HP = 40 * self.R ** 2
         self.windtimer = 1e7
 
-
-    def vento_stellare(self):
-        return None
-
-    def esplosione_grande(self):
-        return None
-
 class DeathStar(CelestialBody):
     def __init__(self,type, m,x,y,Vx,Vy,R,color):
         self.type = "DeathStar"
@@ -66,15 +59,12 @@ class DeathStar(CelestialBody):
 
         self.shottimer = 1e9
 
-    def shot(self):
-        return None
-
     def spawn(self):
+        """Функция выдает параметры для добавления Смешариков.
+        """
         Rk = self.R/visual.scale_factor
         V = (G * self.m / (2 * Rk)) ** 0.5
         return (2 * Rk, V, 4)
-
-
 
 
 class Planet(CelestialBody):
@@ -90,9 +80,6 @@ class Planet(CelestialBody):
         self.R = R
         self.color = color
         self.HP = 40 * self.R ** 2
-
-    def esplosione_grande(self):
-        return None
 
 class Kikorik(Planet):
     def __init__(self, m,x,y,Vx,Vy,R,color, number):
@@ -110,8 +97,6 @@ class Kikorik(Planet):
 
         self.rocket_timer = 1e5
         self.number = number
-    def rocket_strike(self):
-        return None
 
     
 class Bullet:
@@ -185,17 +170,9 @@ class Starship(Entity):
         self.lazers_on = 0
         self.shield_on = 0
 
-    def esplosione_grande(self):
-        return
-
-    def ejection(self):
-        self.m -= self.fuel_tanks * M_FUEL + self.batteries * M_ENERGY
-        self.batteries = 0
-        self.fuel_tanks = 0
-
-
     def targetting(self, event):
-
+        """Функция, вычисляющая угол между кораблем, мышкой и осью OX.
+        """
         x = visual.scale_x(self.x)
         y = visual.scale_y(self.y)
 
@@ -206,14 +183,6 @@ class Starship(Entity):
             self.angle = 0
         else:
             self.angle = ( 2 * (y >= y_s) - 1) * acos((x_s - x) / ((x - x_s) ** 2 + (y - y_s) ** 2) ** 0.5)
-
-
-    def thrusters_on(self, event):
-        self.thrusters_on = 1
-
-    def thrusters_off(self, event):
-        self.thrusters_on = 0
-
 
 class Bonus_energy(Planet):
     def __init__(self, x,y):
@@ -242,12 +211,3 @@ class Bonus_fuel(Planet):
         self.R = 5
         self.color = (40, 40, 0)
         self.HP = 40 * self.R ** 2
-
-
-class Fuel(Entity):
-    None
-
-class ShipUpgrade(Entity):
-    None
-class Energy(Entity):
-    None

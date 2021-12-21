@@ -164,30 +164,30 @@ def collision(body1, body2):
         return [0, 1, 0]
     if (body2.type == 'Lazer_beam' and body1.type == 'Starship'):
         return [1, 0, 0]
-    if (body1.type == 'Bonus_energy' and body2.type == 'Starship'):
+    if (body1.type == 'Bonus_energy' and body2.type = 'Starship'):
         if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
             body2.Energy += 30
-            return[1, 1, 1]
+            return[3, 1, 1]
         else:
-            return[1, 1, 0]
-    if (body2.type == 'Bonus_energy' and body1.type == 'Starship'):
+            return[3, 1, 0]
+    if (body2.type == 'Bonus_energy' and body1.type = 'Starship'):
         if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
             body1.Energy += 30
-            return[1, 1, 1]
+            return[1, 3, 1]
         else:
-            return[1, 1, 0]
-    if (body1.type == 'Bonus_fuel' and body2.type == 'Starship'):
+            return[1, 3, 0]
+    if (body1.type == 'Bonus_fuel' and body2.type = 'Starship'):
         if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
             body2.Fuel += 30
-            return[1, 1, 1]
+            return[4, 1, 1]
         else:
-            return[1, 1, 0]
-    if (body2.type == 'Bonus_fuel' and body1.type == 'Starship'):
+            return[4, 1, 0]
+    if (body2.type == 'Bonus_fuel' and body1.type = 'Starship'):
         if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
             body1.Fuel += 30
-            return[1, 1, 1]
+            return[1, 4, 1]
         else:
-            return[1, 1, 0]
+            return[1, 4, 0]
     if (body1.type == 'Star' or body1.type == 'Kikorik') and (body2.type != 'Star' and body2.type != 'Kikorik'):
         if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
             body2.HP = 0

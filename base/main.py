@@ -214,8 +214,9 @@ def main():
 
 
     t_music = 2760/2.5
-    t_rocket = 0
-    t_bonus = 150
+    t_rocket = 100
+    t_r = 0
+    t_bonus = 300
     t_b = 0
 
     music("kopatich.mp3")
@@ -260,23 +261,27 @@ def main():
                             Kikorik(1, x1 + r * sin(72 * pi / 180), y1 - r * cos(72 * pi / 180), 0, 0, 16, (255, 255, 255),5)))
 
 
-            #t_rocket += 1
-            #
-            #
-            #if t_rocket >= 100:
-            #    t_rocket = 0
+            t_rocket += 1
+
+
+            #if t_r >= t_rocket:
+            #    t_r = 0
             #    for b in space_objects:
-            #        x = visual.scale_x(b.obj.x)
-            #        y = visual.scale_y(b.obj.y)
-            #        if d.obj.type == "Kikorik":
-            #            space_objects.append(DrawableObject(Rocket()))
+            #        x = b.obj.x
+            #        y = b.obj.y
+            #        if b.obj.type == "DeathStar":
+            #            a = k.obj.spawn()
+            #            if (a[2] != 0):
+            #                r = a[0]
+            #                space_objects.append(DrawableObject(Rocket()))
 
 
 
 
             for c in space_objects:
                 a = collision(k.obj,c.obj)
-
+                if (a[2]==1):
+                    print(a)
                 if a[2] == 1:
                     if a[0] == 0:
                         space_objects.remove(k)
@@ -293,7 +298,7 @@ def main():
         for ship in space_objects:
 
             if ship.obj.type == "Starship":
-                print(ship.obj.Fuel, ship.obj.Energy)
+                #print(ship.obj.Fuel, ship.obj.Energy)
 
                 if ship.obj.shield_on == 1:
 
@@ -314,7 +319,7 @@ def main():
                         space_objects.pop(7)
 
                 ship.obj.targetting(pg.mouse.get_pos())
-                print(ship.obj.thrusters_on,ship.obj.angle * 180 / pi, len(space_objects))
+                #print(ship.obj.thrusters_on,ship.obj.angle * 180 / pi, len(space_objects))
         handle_events(pg.event.get(), menu)
         cur_time = time.perf_counter()
 

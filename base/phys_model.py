@@ -129,7 +129,7 @@ def collision(body1, body2):
         else:
             return [1, 0, 0]
 
-    elif (body1.type!= 'Lazer_beam' and body2.type!= 'Lazer_beam' and body1.type!= 'Bonus_energy' and body2.type!= 'Bonus_energy' body1.type!= 'Bonus_fuel' and body2.type!= 'Bonus_fuel'):
+    elif (body1.type!= 'Lazer_beam' and body2.type!= 'Lazer_beam' and body1.type!= 'Bonus_energy' and body2.type!= 'Bonus_energy' and body1.type!= 'Bonus_fuel' and body2.type!= 'Bonus_fuel'):
 
         if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
             if not (body1.type == 'Starship' and body1.shield_on == 1):

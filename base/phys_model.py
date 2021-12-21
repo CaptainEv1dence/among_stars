@@ -11,7 +11,7 @@ gravitational_constant = 6.67408E-11
 Mf = mass_lost_for_tick = 1E4
 Vf = initial_fuel_speed = 1E5
 Mf_rocket = 1E1
-Vf_rocket = 1E1
+Vf_rocket = 1E2
 
 """Гравитационная постоянная Ньютона G"""
 
@@ -58,8 +58,8 @@ def calculate_force(body, space_objects):
         if body.type == "Starship" and body.thrusters_on == 1 and body.Fuel >= 0.1:
             body.Fx += cos(body.angle) * Mf * Vf
             body.Fy -= sin(body.angle) * Mf * Vf
-            body.Fuel -= 0.05
-            body.m -= 0.05 * Mf
+            body.Fuel -= 0.02
+            body.m -= 0.02 * Mf
 
         if body.type == 'Rocket' and obj.type == 'Starship' and body.Fuel >= 0.1:
             body.Fx -= cos(an) * Mf_rocket * Vf_rocket
@@ -163,9 +163,9 @@ def collision(body1, body2):
         return [0, 1, 0]
     elif (body2.type == 'Lazer_beam' and body1.type == 'Starship'):
         return [1, 0, 0]
-    #elif (body1.type == 'Lazer_beam' and body2.type == 'Lazer_beam'):
-     #   return [0, 0, 0]
-    #elif (body1.type == 'Lazer_beam' and body2.type == 'Starship'):
+    elif (body1.type == 'Rocket' and body2.type == 'Rocket'):
+        return [0, 0, 0]
+    #elif (body1.type == 'Rocket' and body2.type == 'Starship'):
      #   return [0, 1, 0]
     #elif (body2.type == 'Lazer_beam' and body1.type == 'Starship'):
      #   return [1, 0, 0]

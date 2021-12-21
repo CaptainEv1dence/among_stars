@@ -163,12 +163,21 @@ def collision(body1, body2):
         return [0, 1, 0]
     elif (body2.type == 'Lazer_beam' and body1.type == 'Starship'):
         return [1, 0, 0]
+    
     elif (body1.type == 'Rocket' and body2.type == 'Rocket'):
         return [0, 0, 0]
-    #elif (body1.type == 'Rocket' and body2.type == 'Starship'):
-     #   return [0, 1, 0]
-    #elif (body2.type == 'Lazer_beam' and body1.type == 'Starship'):
-     #   return [1, 0, 0]
+    elif (body1.type == 'Rocket' and body2.type != 'Rocket'):
+        if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
+            body2.HP -= 2
+            return [0, 1, 1]
+        else:
+            return [0, 1, 0]
+    elif (body2.type == 'Rocket' and body1.type != 'Rocket'):
+        if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
+            body1.HP = -2
+            return [1, 0, 1]
+        else:
+            return [0, 1, 0]
     elif (body1.type == 'Bonus_energy' and body2.type == 'Starship'):
         if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
             if(body2.Energy <= 70):

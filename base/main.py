@@ -215,7 +215,7 @@ def main():
 
 
     #t_music = 2760/2.5
-    t_rocket = 3000
+    t_rocket = 2000
     t_r = 0
     t_bonus = 300
     t_b = 0
@@ -296,7 +296,7 @@ def main():
             if (x < 0 or x > 1000 or y < 0 or y > 800) and (k.obj.type == "Lazer_beam" or k.obj.type == "Rocket"):
                 space_objects.remove(k)
 
-            if not (k.obj.type == "Lazer_beam" or k.obj.type == "Rocket"):
+            if not (k.obj.type == "Lazer_beam"):
                 if (k.obj.HP <= 0):
                     space_objects.remove(k)
 

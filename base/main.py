@@ -272,8 +272,17 @@ def main():
             #        if b.obj.type == "DeathStar":
             #            a = k.obj.spawn()
             #            if (a[2] != 0):
-            #                r = a[0]
-            #                space_objects.append(DrawableObject(Rocket()))
+            #                r = 1.2*a[0]
+#
+            #                if ((x - x_s) ** 2 + (y - y_s) ** 2) ** 0.5 == 0:
+            #                    angle = 0
+            #                else:
+            #                    angle = (2 * (y >= y_s) - 1) * acos(
+            #                        (x_s - x) / ((x - x_s) ** 2 + (y - y_s) ** 2) ** 0.5)
+
+
+
+                            space_objects.append(DrawableObject(Rocket()))
 
 
 

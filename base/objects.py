@@ -200,7 +200,7 @@ class Bonus_energy(Planet):
 
 class Bonus_fuel(Planet):
     def __init__(self, x,y):
-        self.type = 'Bonus_energy'
+        self.type = 'Bonus_fuel'
         self.m = 1
         self.x = x
         self.y = y

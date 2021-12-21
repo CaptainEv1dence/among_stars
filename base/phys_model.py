@@ -10,8 +10,8 @@ from math import pi as pi
 gravitational_constant = 6.67408E-11
 Mf = mass_lost_for_tick = 1E4
 Vf = initial_fuel_speed = 1E5
-Mf_rocket = 1E4
-Vf_rocket = 1E5
+Mf_rocket = 1E1
+Vf_rocket = 1E1
 
 """Гравитационная постоянная Ньютона G"""
 
@@ -163,6 +163,12 @@ def collision(body1, body2):
         return [0, 1, 0]
     elif (body2.type == 'Lazer_beam' and body1.type == 'Starship'):
         return [1, 0, 0]
+    #elif (body1.type == 'Lazer_beam' and body2.type == 'Lazer_beam'):
+     #   return [0, 0, 0]
+    #elif (body1.type == 'Lazer_beam' and body2.type == 'Starship'):
+     #   return [0, 1, 0]
+    #elif (body2.type == 'Lazer_beam' and body1.type == 'Starship'):
+     #   return [1, 0, 0]
     elif (body1.type == 'Bonus_energy' and body2.type == 'Starship'):
         if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
             if(body2.Energy <= 70):

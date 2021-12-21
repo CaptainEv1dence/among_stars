@@ -13,6 +13,7 @@ from math import sin as sin
 from math import cos as cos
 from math import pi as pi
 from random import randint as randint
+import random
 
 timer = None
 
@@ -214,7 +215,7 @@ def main():
 
 
     #t_music = 2760/2.5
-    t_rocket = 100
+    t_rocket = 3000
     t_r = 0
     t_bonus = 300
     t_b = 0
@@ -261,36 +262,31 @@ def main():
                             Kikorik(1, x1 + r * sin(72 * pi / 180), y1 - r * cos(72 * pi / 180), 0, 0, 16, (255, 255, 255),5)))
 
 
-            t_rocket += 1
+            t_r += 1
 
 
-            #if t_r >= t_rocket:
-            #    t_r = 0
-            #    for b in space_objects:
-            #        x = b.obj.x
-            #        y = b.obj.y
-            #        if b.obj.type == "DeathStar":
-            #            a = k.obj.spawn()
-            #            if (a[2] != 0):
-            #                r = 1.2*a[0]
-#
-            #                if ((x - x_s) ** 2 + (y - y_s) ** 2) ** 0.5 == 0:
-            #                    angle = 0
-            #                else:
-            #                    angle = (2 * (y >= y_s) - 1) * acos(
-            #                        (x_s - x) / ((x - x_s) ** 2 + (y - y_s) ** 2) ** 0.5)
+            if t_r >= t_rocket:
+                t_r = 0
+                for b in space_objects:
+                    x1 = b.obj.x
+                    y1 = b.obj.y
+                    if b.obj.type == "DeathStar":
+                        a = b.obj.spawn()
 
-
-
-                            space_objects.append(DrawableObject(Rocket()))
+                        r = 3 * a[0]
+                        for m in space_objects:
+                            if m.obj.type == "Starship":
+                                x_s = m.obj.x
+                                y_s = m.obj.y
+                                angle = random.uniform(0, 2*pi-0.001)
+                                space_objects.append(DrawableObject(Rocket(x1 + r*cos(angle),y1 -  r* sin(angle), 0,0)))
 
 
 
 
             for c in space_objects:
                 a = collision(k.obj,c.obj)
-                if (a[2]==1):
-                    print(a)
+
                 if a[2] == 1:
                     if a[0] == 0:
                         space_objects.remove(k)

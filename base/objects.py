@@ -139,7 +139,7 @@ class Rocket(Bullet):
         self.Vy = Vy
         self.R = 3
         self.color = (255, 0, 0)
-
+        self.HP = 11 * self.R ** 2
 
         self.Fuel = 10.0
 

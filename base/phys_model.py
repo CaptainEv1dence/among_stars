@@ -62,10 +62,9 @@ def calculate_force(body, space_objects):
             body.m -= 0.05 * Mf
 
         if body.type == 'Rocket' and obj.type == 'Starship' and body.Fuel >= 0.1:
-            body.Fx += cos(an) * Mf_rocket * Vf_rocket
-            body.Fy -= sin(an) * Mf_rocket * Vf_rocket
+            body.Fx -= cos(an) * Mf_rocket * Vf_rocket
+            body.Fy += sin(an) * Mf_rocket * Vf_rocket
             body.Fuel -= 0.1
-            body.m -= 0.1 * Mf_rocket
 
         if body.type == 'Bonus_energy':
             body.Fx = 0
@@ -206,18 +205,19 @@ def collision(body1, body2):
             return[1, 4, 1]
         else:
             return[1, 4, 0]
-    elif (body1.type == 'Star' or body1.type == 'Kikorik') and (body2.type != 'Star' and body2.type != 'Kikorik'):
+    elif (body1.type == 'Star' or body1.type == 'Kikorik' or body1.type == 'DeathStar') and (body2.type != 'DeathStar' and body2.type != 'Kikorik' and body2.type != 'Star'):
         if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
             body2.HP = 0
             return[1, 1, -1]
         else:
             return[1, 1, 0]
-    elif (body2.type == 'Star' or body1.type == 'Kikorik') and (body1.type != 'Star' and body2.type != 'Kikorik'):
+    elif (body2.type == 'Star' or body2.type == 'Kikorik' or body2.type == 'DeathStar') and (body1.type != 'DeathStar' and body1.type != 'Kikorik' and body1.type != 'Star'):
         if (((x1 - x2)**2 + (y1 - y2)**2)**0.5 <= body1.R + body2.R) and (x1 != x2 and y1 != y2):
             body1.HP = 0
             return[1, 1, -1]
         else:
             return[1, 1, 0]
+   #elif () 
     else:
         return[1, 1, 0] 
 if __name__ == "__main__":
